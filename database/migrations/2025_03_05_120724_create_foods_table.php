@@ -13,14 +13,18 @@ return new class extends Migration
     {
         Schema::create('foods', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->nullable()->constrained('food_categories')->nullOnDelete();
+            $table->foreignId('food_category_id')->nullable()->constrained('food_categories')->nullOnDelete();
             $table->foreignId('user_id')->nullable()->constrained('users')->cascadeOnDelete();
             $table->string('name');
             $table->string('source')->nullable();
             $table->string('image');
-            $table->integer('age');
+            $table->string('age');
+            $table->float('energy');
+            $table->float('protein');
+            $table->float('fat');
+            $table->integer('portion');
+            $table->text('fruit')->nullable();
             $table->text('recipe');
-            $table->text('nutrition');
             $table->text('step');
             $table->text('description');
             $table->timestamps();

@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('name')->default('Baby John Doe');
             $table->integer('age')->nullable();
             $table->enum('gender', ['L', 'P'])->default('L');
-            $table->integer('height')->nullable();
-            $table->integer('weight')->nullable();
+            $table->float('height')->nullable();
+            $table->float('weight')->nullable();
             $table->text('condition')->nullable();
             $table->timestamps();
         });
