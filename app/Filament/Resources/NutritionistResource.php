@@ -4,7 +4,7 @@ namespace App\Filament\Resources;
 
 use Filament\Forms\Form;
 use Filament\Tables\Table;
-use App\Models\Nutrisionist;
+use App\Models\Nutritionist;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
@@ -17,21 +17,21 @@ use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\NutrisionistResource\Pages;
-use App\Filament\Resources\NutrisionistResource\RelationManagers;
-use App\Filament\Resources\NutrisionistResource\Pages\EditNutrisionist;
-use App\Filament\Resources\NutrisionistResource\Pages\ListNutrisionists;
-use App\Filament\Resources\NutrisionistResource\Pages\CreateNutrisionist;
+use App\Filament\Resources\NutritionistResource\Pages;
+use App\Filament\Resources\NutritionistResource\RelationManagers;
+use App\Filament\Resources\NutritionistResource\Pages\EditNutritionist;
+use App\Filament\Resources\NutritionistResource\Pages\ListNutritionists;
+use App\Filament\Resources\NutritionistResource\Pages\CreateNutritionist;
 
-class NutrisionistResource extends Resource
+class NutritionistResource extends Resource
 {
-    protected static ?string $model = Nutrisionist::class;
+    protected static ?string $model = Nutritionist::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-user';
 
     protected static ?string $navigationLabel = 'Ahli Gizi';
 
-    protected static ?string $slug = 'nutrisionists';
+    protected static ?string $slug = 'Nutritionists';
 
     protected static ?string $modelLabel = 'Ahli Gizi';
 
@@ -48,7 +48,7 @@ class NutrisionistResource extends Resource
                     ->maxLength(255),
                 FileUpload::make('image')
                     ->label('Gambar Spesialis')
-                    ->directory('image/specialist')
+                    ->directory('image/specialists')
                     ->disk('public')
                     ->image()
                     ->validationMessages([
@@ -126,9 +126,9 @@ class NutrisionistResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ListNutrisionists::route('/'),
-            'create' => CreateNutrisionist::route('/create'),
-            'edit' => EditNutrisionist::route('/{record}/edit'),
+            'index' => ListNutritionists::route('/'),
+            'create' => CreateNutritionist::route('/create'),
+            'edit' => EditNutritionist::route('/{record}/edit'),
         ];
     }
 }
