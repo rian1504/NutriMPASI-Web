@@ -31,7 +31,7 @@ class NutritionistResource extends Resource
 
     protected static ?string $navigationLabel = 'Ahli Gizi';
 
-    protected static ?string $slug = 'Nutritionists';
+    protected static ?string $slug = 'nutritionists';
 
     protected static ?string $modelLabel = 'Ahli Gizi';
 

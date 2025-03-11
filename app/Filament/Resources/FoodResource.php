@@ -79,13 +79,19 @@ class FoodResource extends Resource
                         'required' => 'Sumber wajib dipilih',
                     ])
                     ->required(),
-                TextInput::make('age')
+                Select::make('age')
                     ->label('Umur')
-                    ->suffix('bulan')
-                    ->required()
+                    ->string()
+                    ->options([
+                        '6-8' => '6-8',
+                        '9-11' => '9-11',
+                        '12-23' => '12-23',
+                    ])
+                    ->native(false)
                     ->validationMessages([
-                        'required' => 'Umur wajib diisi',
-                    ]),
+                        'required' => 'Umur wajib dipilih',
+                    ])
+                    ->required(),
                 Fieldset::make('nutrition')
                     ->label('Kandungan Gizi')
                     ->schema([
