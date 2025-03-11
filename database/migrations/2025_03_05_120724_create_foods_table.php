@@ -18,12 +18,12 @@ return new class extends Migration
             $table->string('name');
             $table->string('source')->nullable();
             $table->string('image');
-            $table->string('age');
+            $table->enum('age', ['6-8', '9-11', '12-23']);
             $table->float('energy');
             $table->float('protein');
             $table->float('fat');
             $table->integer('portion');
-            $table->text('fruit')->nullable();
+            $table->string('fruit')->nullable();
             $table->text('recipe');
             $table->text('step');
             $table->text('description');

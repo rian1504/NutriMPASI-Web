@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->string('name')->default('Baby John Doe');
-            $table->integer('age')->nullable();
+            $table->date('dob')->nullable();
             $table->enum('gender', ['L', 'P'])->default('L');
             $table->float('height')->nullable();
             $table->float('weight')->nullable();
