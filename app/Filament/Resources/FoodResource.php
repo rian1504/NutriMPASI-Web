@@ -134,7 +134,7 @@ class FoodResource extends Resource
                 FileUpload::make('image')
                     ->label('Gambar Makanan')
                     ->columnSpanFull()
-                    ->directory('image/food')
+                    ->directory('image/foods')
                     ->disk('public')
                     ->image()
                     ->validationMessages([

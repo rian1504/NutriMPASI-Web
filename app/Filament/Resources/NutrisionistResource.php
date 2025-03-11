@@ -48,7 +48,7 @@ class NutrisionistResource extends Resource
                     ->maxLength(255),
                 FileUpload::make('image')
                     ->label('Gambar Spesialis')
-                    ->directory('image/spesialis')
+                    ->directory('image/specialist')
                     ->disk('public')
                     ->image()
                     ->validationMessages([
@@ -68,11 +68,11 @@ class NutrisionistResource extends Resource
                     ->validationMessages([
                         'required' => 'No Telp wajib diisi',
                     ]),
-                TextInput::make('spesialist')
-                    ->label('Spesialist')
+                TextInput::make('specialist')
+                    ->label('Spesialis')
                     ->required()
                     ->validationMessages([
-                        'required' => 'Spesialist wajib diisi',
+                        'required' => 'Spesialis wajib diisi',
                     ])
                     ->maxLength(255),
             ]);
@@ -93,7 +93,7 @@ class NutrisionistResource extends Resource
                     ->size(80),
                 TextColumn::make('telp')
                     ->label('No Telp'),
-                TextColumn::make('spesialist')
+                TextColumn::make('specialist')
                     ->label('Spesialis'),
             ])
             ->filters([
