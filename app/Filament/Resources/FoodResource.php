@@ -66,6 +66,7 @@ class FoodResource extends Resource
                     ->validationMessages([
                         'required' => 'Nama Makanan wajib diisi',
                     ])
+                    ->minLength(4)
                     ->maxLength(255),
                 Select::make('source')
                     ->label('Sumber')

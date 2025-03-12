@@ -45,6 +45,7 @@ class NutritionistResource extends Resource
                     ->validationMessages([
                         'required' => 'Nama Spesialis wajib diisi',
                     ])
+                    ->minLength(3)
                     ->maxLength(255),
                 FileUpload::make('image')
                     ->label('Gambar Spesialis')
@@ -67,13 +68,15 @@ class NutritionistResource extends Resource
                     ->required()
                     ->validationMessages([
                         'required' => 'No Telp wajib diisi',
-                    ]),
+                    ])
+                    ->minLength(10),
                 TextInput::make('specialist')
                     ->label('Spesialis')
                     ->required()
                     ->validationMessages([
                         'required' => 'Spesialis wajib diisi',
                     ])
+                    ->minLength(4)
                     ->maxLength(255),
             ]);
     }

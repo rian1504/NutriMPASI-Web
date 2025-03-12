@@ -45,6 +45,7 @@ class FoodCategoryResource extends Resource
                     ->validationMessages([
                         'required' => 'Nama Kategori Makanan wajib diisi',
                     ])
+                    ->minLength(3)
                     ->maxLength(255),
             ]);
     }
