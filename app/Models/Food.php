@@ -28,7 +28,7 @@ class Food extends Model
 
     public function favorites(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'favorites');
+        return $this->belongsToMany(User::class, 'favorites')->withTimestamps();
     }
 
     public function schedules(): HasMany

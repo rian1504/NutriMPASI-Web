@@ -18,7 +18,7 @@ class FoodController extends Controller
     public function index()
     {
         // ambil data food dengan pagination 10 data
-        $data = Food::select('id', 'user_id', 'name', 'source', 'image')
+        $data = Food::select('id', 'user_id', 'name', 'source', 'image', 'description')
             ->withCount('favorites')
             ->paginate(10);
 
@@ -41,7 +41,7 @@ class FoodController extends Controller
         ]);
 
         // ambil data food dengan pagination 10 data
-        $data = Food::select('id', 'user_id', 'name', 'source', 'image')
+        $data = Food::select('id', 'user_id', 'name', 'source', 'image', 'description')
             ->withCount('favorites')
             ->when($request->search, function ($query) use ($request) {
                 return $query->where('name', 'like', '%' . $request->search . '%');
@@ -89,27 +89,6 @@ class FoodController extends Controller
         return response()->json([
             'data' => $food,
             'message' => 'Berhasil mengambil detail data makanan',
-        ]);
-    }
-
-    // method untuk menambahkan/menghapus makanan ke favorit
-    public function favorite(Food $food)
-    {
-        // mengambil id user
-        $userId = Auth::id();
-
-        // Toggle favorite status
-        $food->favorites()->toggle($userId);
-
-        // cek apakah user sudah menyukai makanan ini
-        $isFavorite = $food->favorites()->where('user_id', $userId)->exists();
-
-        $message = $isFavorite
-            ? 'Berhasil menambahkan makanan ke favorit'
-            : 'Berhasil menghapus makanan dari favorit';
-
-        return response()->json([
-            'message' => $message,
         ]);
     }
 
@@ -221,43 +200,6 @@ class FoodController extends Controller
         return response()->json([
             'data' => $foodRecord,
             'message' => 'Berhasil menyelesaikan memasak',
-        ]);
-    }
-
-    // method untuk memasukkan data makanan ke schedule
-    public function schedule(Request $request, Food $food)
-    {
-        // validasi input
-        $request->validate([
-            'baby_id' => ['required', 'array'],
-            'baby_id.*' => ['required', 'integer'],
-            'portion' => ['required', 'integer'],
-            'date' => ['required', 'date'],
-        ]);
-
-        // mengambil id user
-        $userId = Auth::id();
-
-        // Simpan data ke tabel schedule
-        $schedule = Schedule::create([
-            'user_id' => $userId,
-            'food_id' => $food->id,
-            'portion' => $request->portion,
-            'date' => $request->date,
-        ]);
-
-        // Simpan data ke tabel baby_schedule untuk setiap baby_id
-        foreach ($request->baby_id as $babyId) {
-            BabySchedule::create([
-                'schedule_id' => $schedule->id,
-                'baby_id' => $babyId,
-            ]);
-        }
-
-        // return response JSON
-        return response()->json([
-            'data' => $schedule,
-            'message' => 'Berhasil menambahkan jadwal masakan',
         ]);
     }
 }
