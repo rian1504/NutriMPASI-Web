@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Models\Food;
+use App\Models\FoodRecord;
 use Illuminate\Http\Request;
+use App\Models\BabyFoodRecord;
+use App\Http\Controllers\Controller;
+use App\Models\BabySchedule;
+use App\Models\Schedule;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 class FoodController extends Controller
 {
@@ -94,10 +99,10 @@ class FoodController extends Controller
         $userId = Auth::id();
 
         // Toggle favorite status
-        $food->favoritedBy()->toggle($userId);
+        $food->favorites()->toggle($userId);
 
         // cek apakah user sudah menyukai makanan ini
-        $isFavorite = $food->favoritedBy()->where('user_id', $userId)->exists();
+        $isFavorite = $food->favorites()->where('user_id', $userId)->exists();
 
         $message = $isFavorite
             ? 'Berhasil menambahkan makanan ke favorit'
@@ -105,6 +110,154 @@ class FoodController extends Controller
 
         return response()->json([
             'message' => $message,
+        ]);
+    }
+
+    // method untuk menampilkan panduan memasak
+    public function showCookingGuide(Request $request, Food $food)
+    {
+        // validasi input
+        $request->validate([
+            'baby_id' => ['required', 'array'],
+            'baby_id.*' => ['required', 'integer'],
+            'portion' => ['required', 'integer'],
+        ]);
+
+        // filter data yang ingin ditampilkan
+        $filteredFood = $food->only([
+            'id',
+            'user_id',
+            'name',
+            'source',
+            'image',
+            'recipe',
+            'step',
+        ]);
+
+        // // Hitung jumlah record di tabel food_records yang terkait dengan food ini
+        // $foodRecordCount = $food->food_records()->count();
+
+        // // Tambahkan jumlah record ke data yang akan dikembalikan
+        // $filteredFood['food_record_count'] = $foodRecordCount;
+
+        // return response JSON
+        return response()->json([
+            'data' => [
+                'food' => $filteredFood,
+                'request' => $request->all(),
+            ],
+            'message' => 'Berhasil mengambil data panduan memasak',
+        ]);
+    }
+
+    // method untuk menyelesaikan memasak
+    public function completeCooking(Request $request, Food $food)
+    {
+        // validasi input
+        $request->validate([
+            'baby_id' => ['required', 'array'],
+            'baby_id.*' => ['required', 'integer'],
+            'portion' => ['required', 'integer'],
+        ]);
+
+        // mengambil tanggal hari ini
+        $today = now();
+
+        // mengambil id user
+        $userId = Auth::id();
+
+        // menghitung total portion
+        $totalPortion = $request->portion / $food->portion;
+
+        // menghitung total gizi
+        $totalEnergy = $food->energy * $totalPortion;
+        $totalProtein = $food->protein * $totalPortion;
+        $totalFat = $food->fat * $totalPortion;
+
+        // Path gambar asli dari food
+        $originalImagePath = public_path('storage/' . $food->image);
+
+        // Nama file gambar
+        $imageName = basename($originalImagePath);
+
+        // Path tujuan untuk gambar di folder food_record
+        $destinationFolder = public_path('storage/image/food_records/');
+        $destinationImagePath = $destinationFolder . $imageName;
+
+        // Cek apakah folder tujuan sudah ada, jika belum buat folder
+        if (!File::exists($destinationFolder)) {
+            File::makeDirectory($destinationFolder, 0755, true);
+        }
+
+        // Cek apakah gambar sudah ada di folder food_record
+        if (!File::exists($destinationImagePath)) {
+            // Jika belum ada, copy gambar ke folder food_record
+            File::copy($originalImagePath, $destinationImagePath);
+        }
+
+        // Simpan data ke tabel food_record
+        $foodRecord = FoodRecord::create([
+            'user_id' => $userId,
+            'food_name' => $food->name,
+            'food_source' => $food->source,
+            'food_image' => 'image/food_records/' . $imageName,
+            'food_age' => $food->age,
+            'date' => $today,
+            'portion' => $request->portion,
+            'total_energy' => $totalEnergy,
+            'total_protein' => $totalProtein,
+            'total_fat' => $totalFat,
+        ]);
+
+        // Simpan data ke tabel baby_food_record untuk setiap baby_id
+        foreach ($request->baby_id as $babyId) {
+            BabyFoodRecord::create([
+                'food_record_id' => $foodRecord->id,
+                'baby_id' => $babyId,
+            ]);
+        }
+
+        // return response JSON
+        return response()->json([
+            'data' => $foodRecord,
+            'message' => 'Berhasil menyelesaikan memasak',
+        ]);
+    }
+
+    // method untuk memasukkan data makanan ke schedule
+    public function schedule(Request $request, Food $food)
+    {
+        // validasi input
+        $request->validate([
+            'baby_id' => ['required', 'array'],
+            'baby_id.*' => ['required', 'integer'],
+            'portion' => ['required', 'integer'],
+            'date' => ['required', 'date'],
+        ]);
+
+        // mengambil id user
+        $userId = Auth::id();
+
+        // Simpan data ke tabel schedule
+        $schedule = Schedule::create([
+            'user_id' => $userId,
+            'food_id' => $food->id,
+            'portion' => $request->portion,
+            'date' => $request->date,
+        ]);
+
+        // Simpan data ke tabel baby_schedule untuk setiap baby_id
+        foreach ($request->baby_id as $babyId) {
+            BabySchedule::create([
+                'schedule_id' => $schedule->id,
+                'baby_id' => $babyId,
+            ]);
+        }
+
+        // return response JSON
+        return response()->json([
+            'data' => $schedule,
+            'message' => 'Berhasil menambahkan jadwal masakan',
         ]);
     }
 }
