@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\FavoriteController;
 use App\Http\Controllers\Api\FoodController;
+use App\Http\Controllers\Api\FoodRecommendationController;
 use App\Http\Controllers\Api\NutritionistController;
 use App\Http\Controllers\Api\ScheduleController;
 use Illuminate\Support\Facades\Route;
@@ -38,4 +39,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     // Nutritionist
     Route::get('nutritionist', [NutritionistController::class, 'index']);
+
+    // Food Recommendation
+    Route::resource('food-recommendation', FoodRecommendationController::class)->except(['create', 'edit', 'update']);
+    Route::post('food-recommendation/{food_recommendation}', [FoodRecommendationController::class, 'update'])->name('food_recommendation.update');
 });

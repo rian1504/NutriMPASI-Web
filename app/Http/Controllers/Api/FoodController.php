@@ -97,7 +97,7 @@ class FoodController extends Controller
         $isFavorite = $food->favorites()->where('user_id', $userId)->exists();
 
         // tambahkan informasi apakah makanan ini sudah difavoritkan
-        $food->is_favorite = $isFavorite;
+        $food['is_favorite'] = $isFavorite;
 
         // return response JSON
         return response()->json([
