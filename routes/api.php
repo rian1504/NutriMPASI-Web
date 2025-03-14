@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\FavoriteController;
 use App\Http\Controllers\Api\FoodController;
+use App\Http\Controllers\Api\NutritionistController;
 use App\Http\Controllers\Api\ScheduleController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,6 +17,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::post('filter', [FoodController::class, 'filter']);
         Route::get('{food}/cook', [FoodController::class, 'showCookingGuide']);
         Route::post('{food}/cook/complete', [FoodController::class, 'completeCooking']);
+        Route::post('record', [FoodController::class, 'foodRecord']);
     });
 
     // Favorite
@@ -33,4 +35,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::post('{schedule}/update', [ScheduleController::class, 'update']);
         Route::delete('{schedule}', [ScheduleController::class, 'destroy']);
     });
+
+    // Nutritionist
+    Route::get('nutritionist', [NutritionistController::class, 'index']);
 });

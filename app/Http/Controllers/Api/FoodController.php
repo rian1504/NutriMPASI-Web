@@ -210,4 +210,38 @@ class FoodController extends Controller
             'message' => 'Berhasil menyelesaikan memasak',
         ]);
     }
+
+    // method untuk menampilkan data food_record
+    public function foodRecord(Request $request)
+    {
+        // validasi input
+        $request->validate([
+            'baby_id' => ['required', 'integer']
+        ]);
+
+        // mengambil id user
+        $userId = Auth::id();
+
+        // mengambil data food_record
+        $food_record = FoodRecord::where('user_id', $userId)
+            ->where('baby_id', $request->baby_id)
+            ->get();
+
+        // hidden field
+        $food_record->makeHidden(['user_id', 'baby_id', 'food_id', 'created_at', 'updated_at']);
+
+        // Menjumlahkan field protein, fat, dan energy
+        $totalEnergy = $food_record->sum('energy');
+        $totalProtein = $food_record->sum('protein');
+        $totalFat = $food_record->sum('fat');
+
+        // return respon JSON
+        return response()->json([
+            'data' => $food_record,
+            'total_energy' => $totalEnergy,
+            'total_protein' => $totalProtein,
+            'total_fat' => $totalFat,
+            'message' => 'Berhasil mengambil data food record',
+        ]);
+    }
 }
