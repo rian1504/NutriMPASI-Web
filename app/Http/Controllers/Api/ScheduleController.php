@@ -120,4 +120,77 @@ class ScheduleController extends Controller
             'message' => 'Berhasil menambahkan jadwal masakan',
         ]);
     }
+
+    // method untuk mengambil data schedule untuk edit
+    public function edit(Schedule $schedule)
+    {
+        // mengambil data schedule
+        $schedule = Schedule::select('id', 'portion', 'date')
+            ->with(['baby_schedules.baby' => function ($query) {
+                $query->select('id', 'name');
+            }])
+            ->where('id', $schedule->id)
+            ->get()
+            ->map(function ($schedule) {
+                return [
+                    'id' => $schedule->id,
+                    'portion' => $schedule->portion,
+                    'date' => $schedule->date,
+                    'babies' => $schedule->baby_schedules->pluck('baby')
+                ];
+            });
+
+        // return response JSON
+        return response()->json([
+            'data' => $schedule,
+            'message' => 'Berhasil mengambil data schedule',
+        ]);
+    }
+
+    // method untuk mengedit data schedule
+    public function update(Request $request, Schedule $schedule)
+    {
+        // validasi input
+        $request->validate([
+            'baby_id' => ['required', 'array'],
+            'baby_id.*' => ['required', 'integer'],
+            'portion' => ['required', 'integer'],
+            'date' => ['required', 'date'],
+        ]);
+
+        // update data schedule
+        $schedule->update([
+            'portion' => $request->portion,
+            'date' => $request->date,
+        ]);
+
+        // hapus data di tabel baby_schedule
+        $schedule->baby_schedules()->delete();
+
+        // Simpan data ke tabel baby_schedule untuk setiap baby_id
+        foreach ($request->baby_id as $babyId) {
+            BabySchedule::create([
+                'schedule_id' => $schedule->id,
+                'baby_id' => $babyId,
+            ]);
+        }
+
+        // return response JSON
+        return response()->json([
+            'data' => $schedule,
+            'message' => 'Berhasil mengubah jadwal masakan',
+        ]);
+    }
+
+    // method untuk menghapus data schedule
+    public function destroy(Schedule $schedule)
+    {
+        // menghapus data
+        $schedule->delete();
+
+        // return response JSON
+        return response()->json([
+            'message' => 'Berhasil menghapus jadwal masakan',
+        ]);
+    }
 }

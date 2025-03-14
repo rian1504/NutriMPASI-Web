@@ -29,5 +29,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('', [ScheduleController::class, 'index']);
         Route::post('filter', [ScheduleController::class, 'filter']);
         Route::post('{food}', [ScheduleController::class, 'store']);
+        Route::get('{schedule}/edit', [ScheduleController::class, 'edit']);
+        Route::post('{schedule}/update', [ScheduleController::class, 'update']);
+        Route::delete('{schedule}', [ScheduleController::class, 'destroy']);
     });
 });

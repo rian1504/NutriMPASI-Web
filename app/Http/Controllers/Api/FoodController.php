@@ -7,8 +7,6 @@ use App\Models\FoodRecord;
 use Illuminate\Http\Request;
 use App\Models\BabyFoodRecord;
 use App\Http\Controllers\Controller;
-use App\Models\BabySchedule;
-use App\Models\Schedule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
@@ -44,7 +42,11 @@ class FoodController extends Controller
         $data = Food::select('id', 'user_id', 'name', 'source', 'image', 'description')
             ->withCount('favorites')
             ->when($request->search, function ($query) use ($request) {
-                return $query->where('name', 'like', '%' . $request->search . '%');
+                // Cari berdasarkan nama atau deskripsi
+                return $query->where(function ($q) use ($request) {
+                    $q->where('name', 'like', '%' . $request->search . '%')
+                        ->orWhere('description', 'like', '%' . $request->search . '%');
+                });
             })
             ->when($request->food_category_id, function ($query) use ($request) {
                 return $query->where('food_category_id', $request->food_category_id);
@@ -69,12 +71,17 @@ class FoodController extends Controller
     {
         // filter data yang ingin disembunyikan
         $food = $food->makeHidden([
-            'food_category_id',
             'recipe',
             'step',
             'created_at',
             'updated_at',
         ]);
+
+        // Hitung jumlah record di tabel favorites yang terkait dengan food ini
+        $favoriteCount = $food->favorites()->count();
+
+        // Tambahkan jumlah record ke data yang akan dikembalikan
+        $food['favorite_count'] = $favoriteCount;
 
         // mengambil id user
         $userId = Auth::id();
@@ -105,9 +112,7 @@ class FoodController extends Controller
         // filter data yang ingin ditampilkan
         $filteredFood = $food->only([
             'id',
-            'user_id',
             'name',
-            'source',
             'image',
             'recipe',
             'step',
@@ -140,7 +145,7 @@ class FoodController extends Controller
         ]);
 
         // mengambil tanggal hari ini
-        $today = now();
+        $today = date('Y-m-d');
 
         // mengambil id user
         $userId = Auth::id();

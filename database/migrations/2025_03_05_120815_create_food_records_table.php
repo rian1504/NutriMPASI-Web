@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('food_records', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('food_id')->nullable()->constrained('foods')->nullOnDelete();
             $table->string('food_name');
             $table->string('food_source');
             $table->string('food_image');
