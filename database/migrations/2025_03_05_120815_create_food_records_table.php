@@ -14,16 +14,18 @@ return new class extends Migration
         Schema::create('food_records', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('baby_id')->constrained('babies')->cascadeOnDelete();
             $table->foreignId('food_id')->nullable()->constrained('foods')->nullOnDelete();
-            $table->string('food_name');
-            $table->string('food_source');
-            $table->string('food_image');
-            $table->string('food_age');
-            $table->date('date');
+            $table->string('category');
+            $table->string('name');
+            $table->string('source')->nullable();
+            $table->string('image');
+            $table->enum('age', ['6-8', '9-11', '12-23']);
             $table->integer('portion');
-            $table->float('total_energy');
-            $table->float('total_protein');
-            $table->float('total_fat');
+            $table->float('energy');
+            $table->float('protein');
+            $table->float('fat');
+            $table->date('date');
             $table->timestamps();
         });
     }

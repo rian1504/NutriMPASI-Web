@@ -69,8 +69,14 @@ class FoodController extends Controller
     // method untuk menampilkan detail data makanan
     public function show(Food $food)
     {
+        // Ambil data food beserta relasi food_category
+        $food = $food->load(['food_category' => function ($query) {
+            $query->select('id', 'name');
+        }]);
+
         // filter data yang ingin disembunyikan
         $food = $food->makeHidden([
+            'fruit',
             'recipe',
             'step',
             'created_at',
@@ -106,7 +112,6 @@ class FoodController extends Controller
         $request->validate([
             'baby_id' => ['required', 'array'],
             'baby_id.*' => ['required', 'integer'],
-            'portion' => ['required', 'integer'],
         ]);
 
         // filter data yang ingin ditampilkan
@@ -114,15 +119,16 @@ class FoodController extends Controller
             'id',
             'name',
             'image',
+            'portion',
             'recipe',
             'step',
         ]);
 
-        // // Hitung jumlah record di tabel food_records yang terkait dengan food ini
-        // $foodRecordCount = $food->food_records()->count();
+        // Hitung jumlah record di tabel food_records yang terkait dengan food ini
+        $foodRecordCount = $food->food_records()->count();
 
-        // // Tambahkan jumlah record ke data yang akan dikembalikan
-        // $filteredFood['food_record_count'] = $foodRecordCount;
+        // Tambahkan jumlah record ke data yang akan dikembalikan
+        $filteredFood['food_record_count'] = $foodRecordCount;
 
         // return response JSON
         return response()->json([
@@ -141,7 +147,6 @@ class FoodController extends Controller
         $request->validate([
             'baby_id' => ['required', 'array'],
             'baby_id.*' => ['required', 'integer'],
-            'portion' => ['required', 'integer'],
         ]);
 
         // mengambil tanggal hari ini
@@ -149,14 +154,6 @@ class FoodController extends Controller
 
         // mengambil id user
         $userId = Auth::id();
-
-        // menghitung total portion
-        $totalPortion = $request->portion / $food->portion;
-
-        // menghitung total gizi
-        $totalEnergy = $food->energy * $totalPortion;
-        $totalProtein = $food->protein * $totalPortion;
-        $totalFat = $food->fat * $totalPortion;
 
         // Path gambar asli dari food
         $originalImagePath = public_path('storage/' . $food->image);
@@ -179,25 +176,23 @@ class FoodController extends Controller
             File::copy($originalImagePath, $destinationImagePath);
         }
 
-        // Simpan data ke tabel food_record
-        $foodRecord = FoodRecord::create([
-            'user_id' => $userId,
-            'food_name' => $food->name,
-            'food_source' => $food->source,
-            'food_image' => 'image/food_records/' . $imageName,
-            'food_age' => $food->age,
-            'date' => $today,
-            'portion' => $request->portion,
-            'total_energy' => $totalEnergy,
-            'total_protein' => $totalProtein,
-            'total_fat' => $totalFat,
-        ]);
-
-        // Simpan data ke tabel baby_food_record untuk setiap baby_id
+        // Simpan data ke tabel food_record untuk setiap baby_id
         foreach ($request->baby_id as $babyId) {
-            BabyFoodRecord::create([
-                'food_record_id' => $foodRecord->id,
+            // Simpan data ke tabel food_record
+            $foodRecord = FoodRecord::create([
+                'food_id' => $food->id,
                 'baby_id' => $babyId,
+                'user_id' => $userId,
+                'category' => $food->food_category->value('name'),
+                'name' => $food->name,
+                'source' => $food->source,
+                'image' => 'image/food_records/' . $imageName,
+                'age' => $food->age,
+                'date' => $today,
+                'portion' => $food->portion,
+                'energy' => $food->energy,
+                'protein' => $food->protein,
+                'fat' => $food->fat,
             ]);
         }
 

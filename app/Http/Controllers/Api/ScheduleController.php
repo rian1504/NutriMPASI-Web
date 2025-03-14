@@ -18,7 +18,7 @@ class ScheduleController extends Controller
         $userId = Auth::id();
 
         // mengambil data schedule
-        $schedule = Schedule::select('id', 'food_id', 'portion')
+        $schedule = Schedule::select('id', 'food_id')
             ->with(['food' => function ($query) {
                 $query->select('id', 'name', 'image');
             }])
@@ -32,7 +32,6 @@ class ScheduleController extends Controller
                 return [
                     'id' => $schedule->id,
                     'food_id' => $schedule->food_id,
-                    'portion' => $schedule->portion,
                     'food' => $schedule->food,
                     'babies' => $schedule->baby_schedules->pluck('baby')
                 ];
@@ -57,7 +56,7 @@ class ScheduleController extends Controller
         $userId = Auth::id();
 
         // mengambil data schedule
-        $schedule = Schedule::select('id', 'food_id', 'portion')
+        $schedule = Schedule::select('id', 'food_id')
             ->with(['food' => function ($query) {
                 $query->select('id', 'name', 'image');
             }])
@@ -71,7 +70,6 @@ class ScheduleController extends Controller
                 return [
                     'id' => $schedule->id,
                     'food_id' => $schedule->food_id,
-                    'portion' => $schedule->portion,
                     'food' => $schedule->food,
                     'babies' => $schedule->baby_schedules->pluck('baby')
                 ];
@@ -91,7 +89,6 @@ class ScheduleController extends Controller
         $request->validate([
             'baby_id' => ['required', 'array'],
             'baby_id.*' => ['required', 'integer'],
-            'portion' => ['required', 'integer'],
             'date' => ['required', 'date'],
         ]);
 
@@ -102,7 +99,6 @@ class ScheduleController extends Controller
         $schedule = Schedule::create([
             'user_id' => $userId,
             'food_id' => $food->id,
-            'portion' => $request->portion,
             'date' => $request->date,
         ]);
 
@@ -125,7 +121,7 @@ class ScheduleController extends Controller
     public function edit(Schedule $schedule)
     {
         // mengambil data schedule
-        $schedule = Schedule::select('id', 'portion', 'date')
+        $schedule = Schedule::select('id', 'date')
             ->with(['baby_schedules.baby' => function ($query) {
                 $query->select('id', 'name');
             }])
@@ -134,7 +130,6 @@ class ScheduleController extends Controller
             ->map(function ($schedule) {
                 return [
                     'id' => $schedule->id,
-                    'portion' => $schedule->portion,
                     'date' => $schedule->date,
                     'babies' => $schedule->baby_schedules->pluck('baby')
                 ];
@@ -154,13 +149,11 @@ class ScheduleController extends Controller
         $request->validate([
             'baby_id' => ['required', 'array'],
             'baby_id.*' => ['required', 'integer'],
-            'portion' => ['required', 'integer'],
             'date' => ['required', 'date'],
         ]);
 
         // update data schedule
         $schedule->update([
-            'portion' => $request->portion,
             'date' => $request->date,
         ]);
 

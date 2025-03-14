@@ -22,8 +22,8 @@ class Baby extends Model
         return $this->hasMany(BabySchedule::class);
     }
 
-    public function baby_food_records(): HasMany
+    public function food_records(): HasMany
     {
-        return $this->hasMany(BabyFoodRecord::class);
+        return $this->hasMany(FoodRecord::class);
     }
 }

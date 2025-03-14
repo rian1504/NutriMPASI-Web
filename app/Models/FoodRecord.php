@@ -22,8 +22,8 @@ class FoodRecord extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function baby_food_records(): HasMany
+    public function baby(): BelongsTo
     {
-        return $this->hasMany(BabyFoodRecord::class);
+        return $this->belongsTo(Baby::class);
     }
 }
