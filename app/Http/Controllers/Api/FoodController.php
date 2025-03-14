@@ -7,6 +7,7 @@ use App\Models\FoodRecord;
 use Illuminate\Http\Request;
 use App\Models\BabyFoodRecord;
 use App\Http\Controllers\Controller;
+use App\Models\Schedule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
@@ -147,7 +148,14 @@ class FoodController extends Controller
         $request->validate([
             'baby_id' => ['required', 'array'],
             'baby_id.*' => ['required', 'integer'],
+            'schedule_id' => ['nullable', 'integer']
         ]);
+
+        // cek apakah data berasal dari jadwal
+        if ($request->has('schedule_id')) {
+            // jika dari schedule, hapus data schedule
+            Schedule::where('id', $request->schedule_id)->delete();
+        }
 
         // mengambil tanggal hari ini
         $today = date('Y-m-d');
