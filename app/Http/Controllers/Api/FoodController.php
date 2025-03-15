@@ -16,7 +16,7 @@ class FoodController extends Controller
     // method untuk mengambil semua data makanan
     public function index()
     {
-        // ambil data food dengan pagination 10 data
+        // ambil data makanan dengan pagination 10 data
         $data = Food::select('id', 'user_id', 'name', 'source', 'image', 'description')
             ->withCount('favorites')
             ->paginate(10);

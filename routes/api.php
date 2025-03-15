@@ -4,8 +4,10 @@ use App\Http\Controllers\Api\BabyController;
 use App\Http\Controllers\Api\FavoriteController;
 use App\Http\Controllers\Api\FoodController;
 use App\Http\Controllers\Api\FoodRecommendationController;
+use App\Http\Controllers\Api\LikeController;
 use App\Http\Controllers\Api\NutritionistController;
 use App\Http\Controllers\Api\ScheduleController;
+use App\Http\Controllers\Api\ThreadController;
 use App\Http\Controllers\Api\ThreadUserController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,7 +25,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::post('record', [FoodController::class, 'foodRecord']);
     });
 
-    // Favorite
+    // Favorite Food
     Route::prefix('favorite')->group(function () {
         Route::get('', [FavoriteController::class, 'index']);
         Route::post('{food}', [FavoriteController::class, 'store']);
@@ -53,4 +55,16 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     // Thread User
     Route::resource('thread-user', ThreadUserController::class)->except(['create', 'show', 'edit', 'update']);
     Route::post('thread-user/{thread_user}', [ThreadUserController::class, 'update'])->name('thread.update');
+
+    // Thread
+    Route::prefix('thread')->group(function () {
+        Route::get('', [ThreadController::class, 'index']);
+        Route::get('{thread}', [ThreadController::class, 'show']);
+    });
+
+    // Like Thread
+    Route::prefix('like')->group(function () {
+        Route::get('', [LikeController::class, 'index']);
+        Route::post('{thread}', [LikeController::class, 'store']);
+    });
 });
