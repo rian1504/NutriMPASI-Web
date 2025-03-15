@@ -130,12 +130,12 @@ class FoodRecommendationController extends Controller
                 Storage::delete($food_recommendation->image);
             }
 
-            // Store the new image
+            // Store image baru
             $imagePath = $request->file('image')->store('image/foods');
             $validatedData['image'] = $imagePath;
         }
 
-        // Update the food recommendation data
+        // Update data makanan
         $food_recommendation->update($validatedData);
 
         // return response JSON

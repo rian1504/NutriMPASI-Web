@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\BabyController;
 use App\Http\Controllers\Api\FavoriteController;
 use App\Http\Controllers\Api\FoodController;
 use App\Http\Controllers\Api\FoodRecommendationController;
@@ -43,4 +44,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     // Food Recommendation
     Route::resource('food-recommendation', FoodRecommendationController::class)->except(['create', 'edit', 'update']);
     Route::post('food-recommendation/{food_recommendation}', [FoodRecommendationController::class, 'update'])->name('food_recommendation.update');
+
+    // Baby
+    Route::resource('baby', BabyController::class)->except(['create', 'edit', 'update']);
+    Route::post('baby/{baby}', [BabyController::class, 'update'])->name('baby.update');
 });
