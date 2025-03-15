@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\FoodController;
 use App\Http\Controllers\Api\FoodRecommendationController;
 use App\Http\Controllers\Api\NutritionistController;
 use App\Http\Controllers\Api\ScheduleController;
+use App\Http\Controllers\Api\ThreadUserController;
 use Illuminate\Support\Facades\Route;
 
 // autentikasi
@@ -48,4 +49,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     // Baby
     Route::resource('baby', BabyController::class)->except(['create', 'edit', 'update']);
     Route::post('baby/{baby}', [BabyController::class, 'update'])->name('baby.update');
+
+    // Thread User
+    Route::resource('thread-user', ThreadUserController::class)->except(['create', 'show', 'edit', 'update']);
+    Route::post('thread-user/{thread_user}', [ThreadUserController::class, 'update'])->name('thread.update');
 });

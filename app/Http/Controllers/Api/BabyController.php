@@ -24,7 +24,7 @@ class BabyController extends Controller
         // return response JSON
         return response()->json([
             'data' => $baby,
-            'message' => 'Berhasil mengambil data baby user',
+            'message' => 'Berhasil mengambil data bayi user',
         ]);
     }
 
