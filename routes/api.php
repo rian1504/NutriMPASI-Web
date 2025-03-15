@@ -1,15 +1,17 @@
 <?php
 
-use App\Http\Controllers\Api\BabyController;
-use App\Http\Controllers\Api\FavoriteController;
-use App\Http\Controllers\Api\FoodController;
-use App\Http\Controllers\Api\FoodRecommendationController;
-use App\Http\Controllers\Api\LikeController;
-use App\Http\Controllers\Api\NutritionistController;
-use App\Http\Controllers\Api\ScheduleController;
-use App\Http\Controllers\Api\ThreadController;
-use App\Http\Controllers\Api\ThreadUserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\BabyController;
+use App\Http\Controllers\Api\FoodController;
+use App\Http\Controllers\Api\LikeController;
+use App\Http\Controllers\Api\ThreadController;
+use App\Http\Controllers\Api\CommentController;
+use App\Http\Controllers\Api\FavoriteController;
+use App\Http\Controllers\Api\ScheduleController;
+use App\Http\Controllers\Api\ThreadUserController;
+use App\Http\Controllers\Api\NotificationController;
+use App\Http\Controllers\Api\NutritionistController;
+use App\Http\Controllers\Api\FoodRecommendationController;
 
 // autentikasi
 require __DIR__ . '/auth.php';
@@ -66,5 +68,15 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::prefix('like')->group(function () {
         Route::get('', [LikeController::class, 'index']);
         Route::post('{thread}', [LikeController::class, 'store']);
+    });
+
+    // Comment
+    Route::resource('comment', CommentController::class)->except(['index', 'create', 'show', 'edit', 'update']);
+    Route::post('comment/{comment}', [CommentController::class, 'update'])->name('comment.update');
+
+    // Notification
+    Route::prefix('notification')->group(function () {
+        Route::get('', [NotificationController::class, 'index']);
+        Route::post('{notification}', [NotificationController::class, 'update']);
     });
 });
