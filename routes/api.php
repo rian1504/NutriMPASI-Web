@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\ThreadUserController;
 use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\NutritionistController;
 use App\Http\Controllers\Api\FoodRecommendationController;
+use App\Http\Controllers\Api\ProfileController;
 
 // autentikasi
 require __DIR__ . '/auth.php';
@@ -78,5 +79,12 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::prefix('notification')->group(function () {
         Route::get('', [NotificationController::class, 'index']);
         Route::post('{notification}', [NotificationController::class, 'update']);
+    });
+
+    // Profil
+    Route::prefix('profile')->group(function () {
+        Route::get('', [ProfileController::class, 'index']);
+        Route::post('{user}', [ProfileController::class, 'updateProfile']);
+        Route::post('{user}/password', [ProfileController::class, 'updatePassword']);
     });
 });
