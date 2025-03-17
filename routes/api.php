@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\NutritionistController;
 use App\Http\Controllers\Api\FoodRecommendationController;
 use App\Http\Controllers\Api\ProfileController;
+use App\Http\Controllers\Api\ReportController;
 
 // autentikasi
 require __DIR__ . '/auth.php';
@@ -87,4 +88,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::post('{user}', [ProfileController::class, 'updateProfile']);
         Route::post('{user}/password', [ProfileController::class, 'updatePassword']);
     });
+
+    // Report
+    Route::post('report/{category}', [ReportController::class, 'store']);
 });
