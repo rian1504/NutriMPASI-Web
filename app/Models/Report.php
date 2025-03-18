@@ -18,4 +18,19 @@ class Report extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function food(): BelongsTo
+    {
+        return $this->belongsTo(Food::class, 'refers_id');
+    }
+
+    public function thread(): BelongsTo
+    {
+        return $this->belongsTo(Thread::class, 'refers_id');
+    }
+
+    public function comment(): BelongsTo
+    {
+        return $this->belongsTo(Comment::class, 'refers_id');
+    }
 }
