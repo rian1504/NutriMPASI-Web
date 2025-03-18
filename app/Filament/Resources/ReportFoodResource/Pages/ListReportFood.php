@@ -8,9 +8,4 @@ use Filament\Resources\Pages\ListRecords;
 class ListReportFood extends ListRecords
 {
     protected static string $resource = ReportFoodResource::class;
-
-    protected function getHeaderActions(): array
-    {
-        return [];
-    }
 }

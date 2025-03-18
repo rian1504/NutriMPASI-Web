@@ -1,14 +1,18 @@
 <?php
 
-namespace App\Filament\Resources\ReportFoodResource\RelationManagers;
+namespace App\Filament\Resources\ReportThreadResource\RelationManagers;
 
+use Filament\Forms;
+use Filament\Tables;
 use App\Models\Report;
-use Filament\Forms\Components\Textarea;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Resources\RelationManagers\RelationManager;
 
-class ReportFoodRelationManager extends RelationManager
+class ReportThreadRelationManager extends RelationManager
 {
     protected static string $relationship = 'reports';
 

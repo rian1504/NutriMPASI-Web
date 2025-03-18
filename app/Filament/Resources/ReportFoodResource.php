@@ -18,7 +18,7 @@ use Filament\Forms\Components\FileUpload;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\ReportFoodResource\Pages\ListReportFood;
 use App\Filament\Resources\ReportFoodResource\Pages\ViewReportFood;
-use App\Filament\Resources\ReportFoodResource\RelationManagers\FoodReportRelationManager;
+use App\Filament\Resources\ReportFoodResource\RelationManagers\ReportFoodRelationManager;
 
 class ReportFoodResource extends Resource
 {
@@ -42,14 +42,15 @@ class ReportFoodResource extends Resource
 
         return $form
             ->schema([
+                Select::make('user_id')
+                    ->relationship('user', 'name')
+                    ->label('Nama Pemilik Makanan'),
+                TextInput::make('name')
+                    ->label('Nama Makanan'),
                 Select::make('food_category_id')
                     ->label('Kategori')
                     ->options($category)
                     ->native(false),
-                TextInput::make('name')
-                    ->label('Nama Makanan'),
-                TextInput::make('source')
-                    ->label('Sumber'),
                 TextInput::make('age')
                     ->label('Umur')
                     ->suffix('bulan'),
@@ -95,16 +96,18 @@ class ReportFoodResource extends Resource
             ->columns([
                 TextColumn::make('No')
                     ->rowIndex(),
+                TextColumn::make('user.name')
+                    ->label('Nama Pemilik Makanan'),
                 TextColumn::make('name')
                     ->label('Nama Makanan'),
-                TextColumn::make('reports_count')
-                    ->label('Total Laporan')
-                    ->suffix(' laporan')
-                    ->color('danger'),
                 ImageColumn::make('image')
                     ->label('Gambar Makanan')
                     ->square()
                     ->size(80),
+                TextColumn::make('reports_count')
+                    ->label('Total Laporan')
+                    ->suffix(' laporan')
+                    ->color('danger'),
             ])
             ->actions([
                 ViewAction::make()
@@ -123,7 +126,7 @@ class ReportFoodResource extends Resource
     public static function getRelations(): array
     {
         return [
-            FoodReportRelationManager::class
+            ReportFoodRelationManager::class
         ];
     }
 

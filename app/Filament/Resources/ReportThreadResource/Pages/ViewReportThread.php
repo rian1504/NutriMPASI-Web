@@ -1,19 +1,17 @@
 <?php
 
-namespace App\Filament\Resources\ReportFoodResource\Pages;
+namespace App\Filament\Resources\ReportThreadResource\Pages;
 
 use App\Models\Report;
 use App\Models\Notification;
 use Filament\Actions\Action;
-use Illuminate\Support\Facades\Storage;
 use Filament\Resources\Pages\ViewRecord;
-use App\Filament\Resources\ReportFoodResource;
+use App\Filament\Resources\ReportThreadResource;
 use Filament\Notifications\Notification as FilamentNotification;
-use App\Filament\Resources\ReportFoodResource\RelationManagers\ReportFoodRelationManager;
 
-class ViewReportFood extends ViewRecord
+class ViewReportThread extends ViewRecord
 {
-    protected static string $resource = ReportFoodResource::class;
+    protected static string $resource = ReportThreadResource::class;
 
     protected function getHeaderActions(): array
     {
@@ -38,42 +36,36 @@ class ViewReportFood extends ViewRecord
 
     protected function acceptReports(): void
     {
-        // Ambil record yang sedang dilihat (food)
-        $food = $this->getRecord();
+        // Ambil record yang sedang dilihat (thread)
+        $thread = $this->getRecord();
 
-        // Ambil semua laporan yang terkait dengan food ini
-        $reports = Report::where('refers_id', $food->id)
-            ->where('category_report', 'food')
+        // Ambil semua laporan yang terkait dengan thread ini
+        $reports = Report::where('refers_id', $thread->id)
+            ->where('category_report', 'thread')
             ->get();
 
-        // Kirim notifikasi ke pemilik food
+        // Kirim notifikasi ke pemilik thread
         Notification::create([
-            'user_id' => $food->user_id,
-            'title' => 'Laporan Makanan Dihapus',
-            'content' => 'Makanan anda dengan nama makanan: "' . $food->name . '" telah dihapus karena melanggar beberapa peraturan',
+            'user_id' => $thread->user_id,
+            'title' => 'Laporan Thread Dihapus',
+            'content' => 'Thread anda dengan judul thread: "' . $thread->title . '" telah dihapus karena melanggar beberapa peraturan',
         ]);
 
         // Kirim notifikasi ke masing-masing user yang melaporkan
         foreach ($reports as $report) {
             Notification::create([
                 'user_id' => $report->user_id,
-                'title' => 'Laporan Makanan Diterima',
+                'title' => 'Laporan Thread Diterima',
                 'content' =>
                 <<<EOD
-                Laporan Anda tentang makanan dengan nama "$food->name" telah diterima dan makanan telah dihapus.
+                Laporan Anda mengenai thread dengan judul "$thread->title" telah diterima dan thread telah dihapus.
                 Terima kasih sudah melaporkan😻😻
                 EOD,
             ]);
         }
 
-        // jika ada image
-        if ($food->image && Storage::exists($food->image)) {
-            // delete image
-            Storage::delete($food->image);
-        }
-
-        // Hapus data food
-        $food->delete();
+        // Hapus data thread
+        $thread->delete();
 
         // Hapus data laporan yang terkait
         $reports->each->delete();
@@ -90,22 +82,22 @@ class ViewReportFood extends ViewRecord
 
     protected function rejectReports(): void
     {
-        // Ambil record yang sedang dilihat (food)
-        $food = $this->getRecord();
+        // Ambil record yang sedang dilihat (thread)
+        $thread = $this->getRecord();
 
-        // Ambil semua laporan yang terkait dengan food ini
-        $reports = Report::where('refers_id', $food->id)
-            ->where('category_report', 'food')
+        // Ambil semua laporan yang terkait dengan thread ini
+        $reports = Report::where('refers_id', $thread->id)
+            ->where('category_report', 'thread')
             ->get();
 
         // Kirim notifikasi ke masing-masing user yang melaporkan
         foreach ($reports as $report) {
             Notification::create([
                 'user_id' => $report->user_id,
-                'title' => 'Laporan Makanan Ditolak',
+                'title' => 'Laporan Thread Ditolak',
                 'content' =>
                 <<<EOD
-                Laporan Anda tentang makanan dengan nama "$food->name" telah ditolak.
+                Laporan Anda mengenai thread dengan judul "$thread->title" telah ditolak.
                 Terima kasih sudah melaporkan😻😻
                 EOD,
             ]);
