@@ -2,35 +2,40 @@
 
 namespace App\Filament\Resources;
 
-use App\Models\Thread;
+use Filament\Forms;
+use Filament\Tables;
+use App\Models\Comment;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use App\Models\Comment\ReportComment;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
-use App\Filament\Resources\ReportThreadResource\Pages\ViewReportThread;
-use App\Filament\Resources\ReportThreadResource\Pages\ListReportThreads;
-use App\Filament\Resources\ReportThreadResource\RelationManagers\ReportThreadRelationManager;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\ReportCommentResource\Pages;
+use App\Filament\Resources\ReportCommentResource\RelationManagers;
+use App\Filament\Resources\ReportCommentResource\Pages\ViewReportComment;
+use App\Filament\Resources\ReportCommentResource\Pages\ListReportComments;
+use App\Filament\Resources\ReportCommentResource\RelationManagers\ReportCommentRelationManager;
 
-class ReportThreadResource extends Resource
+class ReportCommentResource extends Resource
 {
-    protected static ?string $model = Thread::class;
+    protected static ?string $model = Comment::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-pencil-square';
+    protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-bottom-center-text';
 
-    protected static ?string $navigationLabel = 'Thread';
+    protected static ?string $navigationLabel = 'Komentar';
 
-    protected static ?string $slug = 'report-thread';
+    protected static ?string $slug = 'report-comment';
 
-    protected static ?string $modelLabel = 'Thread';
+    protected static ?string $modelLabel = 'Komentar';
 
     protected static ?string $navigationGroup = 'Data Laporan';
 
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {
@@ -38,8 +43,9 @@ class ReportThreadResource extends Resource
             ->schema([
                 Select::make('user_id')
                     ->relationship('user', 'name')
-                    ->label('Nama Pemilik Thread'),
-                TextInput::make('title')
+                    ->label('Nama Pemilik Komentar'),
+                Select::make('thread_id')
+                    ->relationship('thread', 'title')
                     ->label('Judul Thread'),
                 Textarea::make('content')
                     ->label('Isi Konten')
@@ -55,8 +61,8 @@ class ReportThreadResource extends Resource
                 TextColumn::make('No')
                     ->rowIndex(),
                 TextColumn::make('user.name')
-                    ->label('Nama Pemilik Thread'),
-                TextColumn::make('title')
+                    ->label('Nama Pemilik Komentar'),
+                TextColumn::make('thread.title')
                     ->label('Judul Thread'),
                 TextColumn::make('reports_count')
                     ->label('Total Laporan')
@@ -75,15 +81,15 @@ class ReportThreadResource extends Resource
     public static function getRelations(): array
     {
         return [
-            ReportThreadRelationManager::class
+            ReportCommentRelationManager::class
         ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => ListReportThreads::route('/'),
-            'view' => ViewReportThread::route('/{record}'),
+            'index' => ListReportComments::route('/'),
+            'view' => ViewReportComment::route('/{record}'),
         ];
     }
 
@@ -91,7 +97,7 @@ class ReportThreadResource extends Resource
     {
         return parent::getEloquentQuery()
             ->whereHas('reports', function ($query) {
-                $query->where('category_report', 'thread');
+                $query->where('category_report', 'comment');
             })
             ->withCount('reports');
     }

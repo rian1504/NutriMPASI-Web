@@ -24,7 +24,7 @@ class ReportFoodResource extends Resource
 {
     protected static ?string $model = Food::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-cake';
+    protected static ?string $navigationIcon = 'heroicon-o-circle-stack';
 
     protected static ?string $navigationLabel = 'Makanan';
 
