@@ -37,6 +37,8 @@ class ReportCommentResource extends Resource
 
     protected static ?int $navigationSort = 3;
 
+    protected static ?string $navigationBadgeTooltip = 'Total Laporan Komentar';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -100,5 +102,15 @@ class ReportCommentResource extends Resource
                 $query->where('category_report', 'comment');
             })
             ->withCount('reports');
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getEloquentQuery()->count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'danger';
     }
 }

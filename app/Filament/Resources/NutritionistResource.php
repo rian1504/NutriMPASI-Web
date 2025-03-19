@@ -35,6 +35,8 @@ class NutritionistResource extends Resource
 
     protected static ?string $modelLabel = 'Ahli Gizi';
 
+    protected static ?string $navigationBadgeTooltip = 'Total Data Ahli Gizi';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -133,5 +135,10 @@ class NutritionistResource extends Resource
             'create' => CreateNutritionist::route('/create'),
             'edit' => EditNutritionist::route('/{record}/edit'),
         ];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getEloquentQuery()->count();
     }
 }

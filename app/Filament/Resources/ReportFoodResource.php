@@ -36,6 +36,8 @@ class ReportFoodResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
+    protected static ?string $navigationBadgeTooltip = 'Total Laporan Makanan';
+
     public static function form(Form $form): Form
     {
         $category = FoodCategory::all()->pluck('name', 'id');
@@ -137,5 +139,15 @@ class ReportFoodResource extends Resource
                 $query->where('category_report', 'food');
             })
             ->withCount('reports');
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getEloquentQuery()->count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'danger';
     }
 }

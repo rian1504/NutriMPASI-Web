@@ -46,6 +46,8 @@ class FoodResource extends Resource
 
     protected static ?int $navigationSort = 2;
 
+    protected static ?string $navigationBadgeTooltip = 'Total Data Makanan';
+
     public static function form(Form $form): Form
     {
         $category = FoodCategory::all()->pluck('name', 'id');
@@ -267,5 +269,10 @@ class FoodResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()->where('user_id', null);
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getEloquentQuery()->count();
     }
 }

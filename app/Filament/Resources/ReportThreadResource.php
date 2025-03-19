@@ -32,6 +32,8 @@ class ReportThreadResource extends Resource
 
     protected static ?int $navigationSort = 2;
 
+    protected static ?string $navigationBadgeTooltip = 'Total Laporan Thread';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -94,5 +96,15 @@ class ReportThreadResource extends Resource
                 $query->where('category_report', 'thread');
             })
             ->withCount('reports');
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getEloquentQuery()->count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'danger';
     }
 }

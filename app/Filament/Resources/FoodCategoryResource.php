@@ -35,6 +35,8 @@ class FoodCategoryResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
+    protected static ?string $navigationBadgeTooltip = 'Total Data Kategori Makanan';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -89,5 +91,10 @@ class FoodCategoryResource extends Resource
             'create' => CreateFoodCategory::route('/create'),
             'edit' => EditFoodCategory::route('/{record}/edit'),
         ];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getEloquentQuery()->count();
     }
 }
