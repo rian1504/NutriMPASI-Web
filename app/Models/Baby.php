@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -25,5 +26,27 @@ class Baby extends Model
     public function food_records(): HasMany
     {
         return $this->hasMany(FoodRecord::class);
+    }
+
+    // Hitung usia bayi dalam bulan
+    public function getAgeInMonths(): int
+    {
+        if (!$this->dob) {
+            return 0;
+        }
+
+        return Carbon::parse($this->dob)->diffInMonths(now());
+    }
+
+    // Kategori usia bayi berdasarkan rentang
+    public function getAgeCategory(): string
+    {
+        $months = $this->getAgeInMonths();
+
+        if ($months >= 6 && $months <= 8) return '6-8';
+        if ($months >= 9 && $months <= 11) return '9-11';
+        if ($months >= 12 && $months <= 23) return '12-23';
+
+        return '0-5'; // Di luar rentang yang ditentukan
     }
 }
