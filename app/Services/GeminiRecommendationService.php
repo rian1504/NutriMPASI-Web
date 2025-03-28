@@ -178,21 +178,10 @@ class GeminiRecommendationService
         return collect($recommendations['recommendations'])->map(function ($item) use ($foods) {
             $food = $foods->where('id', $item['food_id'])->first();
 
-            if (!$food) {
-                return null;
-            }
-
             return [
-                'id' => $food->id,
-                'name' => $food->name,
-                'category' => $food->category->name ?? 'Umum',
-                'age_range' => $food->age,
-                'energy' => $food->energy,
-                'protein' => $food->protein,
-                'fat' => $food->fat,
-                'image' => $food->image,
+                'food' => $food,
                 'reason' => $item['reason']
             ];
-        })->filter();
+        })->filter()->values()->toArray();
     }
 }

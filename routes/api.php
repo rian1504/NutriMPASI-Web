@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\BabyController;
 use App\Http\Controllers\Api\FoodController;
@@ -15,7 +14,6 @@ use App\Http\Controllers\Api\ThreadUserController;
 use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\NutritionistController;
 use App\Http\Controllers\Api\FoodRecommendationController;
-use App\Http\Controllers\Api\FoodRecommendationAIController;
 
 // autentikasi
 require __DIR__ . '/auth.php';
@@ -93,16 +91,4 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     // Report
     Route::post('report/{category}', [ReportController::class, 'store']);
-
-    // Recommendation Gemini AI
-    Route::get('food-recommendation-ai/{baby}', [FoodRecommendationAIController::class, 'recommend']);
-    // Route::get('check-models', function () {
-    //     $response = Http::get("https://generativelanguage.googleapis.com/v1beta/models?key=" . env('GEMINI_API_KEY'));
-
-    //     if ($response->successful()) {
-    //         return $response->json();
-    //     }
-
-    //     return response()->json(['error' => 'Failed to fetch models'], 500);
-    // });
 });

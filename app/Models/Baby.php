@@ -12,6 +12,9 @@ class Baby extends Model
     // Guard the id field
     protected $guarded = ['id'];
 
+    // hidden field
+    protected $hidden = ['created_at', 'updated_at'];
+
     // Define the relationship
     public function user(): BelongsTo
     {
@@ -26,6 +29,11 @@ class Baby extends Model
     public function food_records(): HasMany
     {
         return $this->hasMany(FoodRecord::class);
+    }
+
+    public function food_recommendations(): HasMany
+    {
+        return $this->hasMany(FoodRecommendation::class);
     }
 
     // Hitung usia bayi dalam bulan
