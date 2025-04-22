@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Baby;
+use App\Models\FoodRecommendation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,7 +20,7 @@ class BabyController extends Controller
         $baby = Baby::where('user_id', $userId)->get();
 
         // filter data yang ingin disembunyikan
-        $baby = $baby->makeHidden(['user_id', 'dob', 'condition', 'created_at', 'updated_at']);
+        $baby = $baby->makeHidden(['user_id', 'created_at', 'updated_at']);
 
         // return response JSON
         return response()->json([
@@ -88,6 +89,9 @@ class BabyController extends Controller
             'condition' => ['nullable', 'string', 'min:10'],
         ]);
 
+        // Tambahkan is_profile_complete ke data yang akan diupdate
+        $validatedData['is_profile_complete'] = true;
+
         // Update data bayi
         $baby->update($validatedData);
 
@@ -118,6 +122,19 @@ class BabyController extends Controller
 
         return response()->json([
             'message' => 'Data bayi berhasil dihapus',
+        ]);
+    }
+
+    // method untuk mengambil data rekomendasi makanan bayi
+    public function foodRecommendation(Baby $baby)
+    {
+        // ambil data rekomendasi makanan bayi
+        $food = FoodRecommendation::where('baby_id', $baby->id)->get();
+
+        // return response JSON
+        return response()->json([
+            'data' => $food,
+            'message' => 'Berhasil mengambil data rekomendasi makanan bayi',
         ]);
     }
 }

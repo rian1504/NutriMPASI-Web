@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Models\Food;
 use App\Models\FoodRecord;
 use Illuminate\Http\Request;
-use App\Models\BabyFoodRecord;
 use App\Http\Controllers\Controller;
+use App\Models\FoodCategory;
 use App\Models\Schedule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -16,15 +16,37 @@ class FoodController extends Controller
     // method untuk mengambil semua data makanan
     public function index()
     {
-        // ambil data makanan dengan pagination 10 data
+        // mengambil id user
+        $userId = Auth::id();
+
+        // ambil semua data makanan
         $data = Food::select('id', 'user_id', 'name', 'source', 'image', 'description')
             ->withCount('favorites')
-            ->paginate(10);
+            ->withExists([
+                'favorites as is_favorite' => function ($query) use ($userId) {
+                    $query->where('user_id', $userId);
+                }
+            ])
+            ->inRandomOrder()
+            ->get();
 
         // return response JSON
         return response()->json([
             'data' => $data,
             'message' => 'Berhasil mengambil semua data makanan',
+        ]);
+    }
+
+    // method untuk mengambil data kategori makanan
+    public function category()
+    {
+        // ambil data kategori makanan
+        $data = FoodCategory::all();
+
+        // return response JSON
+        return response()->json([
+            'data' => $data,
+            'message' => 'Berhasil mengambil semua data kategori makanan',
         ]);
     }
 
@@ -88,7 +110,7 @@ class FoodController extends Controller
         $favoriteCount = $food->favorites()->count();
 
         // Tambahkan jumlah record ke data yang akan dikembalikan
-        $food['favorite_count'] = $favoriteCount;
+        $food['favorites_count'] = $favoriteCount;
 
         // mengambil id user
         $userId = Auth::id();

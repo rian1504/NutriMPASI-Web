@@ -26,17 +26,17 @@ class ReportFoodResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-circle-stack';
 
-    protected static ?string $navigationLabel = 'Makanan';
+    protected static ?string $navigationLabel = 'Usulan Makanan';
 
     protected static ?string $slug = 'report-food';
 
-    protected static ?string $modelLabel = 'Makanan';
+    protected static ?string $modelLabel = 'Usulan Makanan';
 
     protected static ?string $navigationGroup = 'Data Laporan';
 
     protected static ?int $navigationSort = 1;
 
-    protected static ?string $navigationBadgeTooltip = 'Total Laporan Makanan';
+    protected static ?string $navigationBadgeTooltip = 'Total Laporan Usulan Makanan';
 
     public static function form(Form $form): Form
     {

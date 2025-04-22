@@ -22,6 +22,7 @@ use App\Filament\Resources\NutritionistResource\RelationManagers;
 use App\Filament\Resources\NutritionistResource\Pages\EditNutritionist;
 use App\Filament\Resources\NutritionistResource\Pages\ListNutritionists;
 use App\Filament\Resources\NutritionistResource\Pages\CreateNutritionist;
+use Filament\Forms\Components\Select;
 
 class NutritionistResource extends Resource
 {
@@ -49,6 +50,18 @@ class NutritionistResource extends Resource
                     ])
                     ->minLength(3)
                     ->maxLength(255),
+                Select::make('gender')
+                    ->label('Gender')
+                    ->string()
+                    ->options([
+                        'L' => 'Laki-laki',
+                        'P' => 'Perempuan',
+                    ])
+                    ->native(false)
+                    ->validationMessages([
+                        'required' => 'Gender wajib dipilih',
+                    ])
+                    ->required(),
                 FileUpload::make('image')
                     ->label('Gambar Spesialis')
                     ->directory('image/specialists')
@@ -92,6 +105,11 @@ class NutritionistResource extends Resource
                 TextColumn::make('name')
                     ->label('Nama Spesialis')
                     ->searchable(),
+                TextColumn::make('gender')
+                    ->label('Gender Spesialis')
+                    ->formatStateUsing(function ($state) {
+                        return $state === 'L' ? 'Laki-laki' : ($state === 'P' ? 'Perempuan' : '-');
+                    }),
                 ImageColumn::make('image')
                     ->label('Gambar Spesialis')
                     ->circular()

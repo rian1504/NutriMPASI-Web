@@ -20,6 +20,7 @@ return new class extends Migration
             $table->float('height')->nullable();
             $table->float('weight')->nullable();
             $table->text('condition')->nullable();
+            $table->boolean('is_profile_complete')->default(0);
             $table->timestamps();
         });
     }

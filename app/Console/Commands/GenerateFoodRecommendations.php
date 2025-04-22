@@ -73,8 +73,11 @@ class GenerateFoodRecommendations extends Command
             // Hapus rekomendasi lama
             $baby->food_recommendations()->delete();
 
-            // Dapatkan makanan yang sesuai dengan kategori usia bayi
-            $foods = Food::where('age', $baby->getAgeCategory())->get();
+            // Dapatkan makanan yang sesuai dengan kategori usia bayi dan verified
+            $foods = Food::where('age', $baby->getAgeCategory())
+                ->whereNull('user_id')
+                ->whereNotNull('source')
+                ->get();
 
             if ($foods->isEmpty()) {
                 Log::info("No foods available for baby {$baby->id} with age category {$baby->getAgeCategory()}");
@@ -84,7 +87,7 @@ class GenerateFoodRecommendations extends Command
             // Generate rekomendasi baru dengan menyertakan $baby dan $foods
             $recommendations = $service->generateRecommendation($baby, $foods);
 
-            // Simpan ke database
+            // Simpan food recommendation ke database
             foreach ($recommendations as $rec) {
                 $baby->food_recommendations()->create([
                     'food_id' => $rec['food']['id'],

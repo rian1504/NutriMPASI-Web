@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('nutritionists', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->enum('gender', ['L', 'P']);
             $table->string('image');
             $table->string('telp');
             $table->string('specialist');

@@ -22,8 +22,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     // Food
     Route::prefix('food')->group(function () {
         Route::get('', [FoodController::class, 'index']);
-        Route::get('{food}', [FoodController::class, 'show']);
+        Route::get('category', [FoodController::class, 'category']);
         Route::post('filter', [FoodController::class, 'filter']);
+        Route::get('{food}', [FoodController::class, 'show']);
         Route::get('{food}/cook', [FoodController::class, 'showCookingGuide']);
         Route::post('{food}/cook/complete', [FoodController::class, 'completeCooking']);
         Route::post('record', [FoodController::class, 'foodRecord']);
@@ -55,6 +56,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     // Baby
     Route::resource('baby', BabyController::class)->except(['create', 'edit', 'update']);
     Route::post('baby/{baby}', [BabyController::class, 'update'])->name('baby.update');
+    Route::get('baby/food-recommendation/{baby}', [BabyController::class, 'foodRecommendation'])->name('baby.food-recommendation');
 
     // Thread User
     Route::resource('thread-user', ThreadUserController::class)->except(['create', 'show', 'edit', 'update']);

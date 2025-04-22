@@ -159,7 +159,7 @@ class FoodResource extends Resource
                     ->label('Buah')
                     ->autosize(),
                 Textarea::make('recipe')
-                    ->label('Resep')
+                    ->label('Bahan')
                     ->autosize()
                     ->required(),
                 Textarea::make('step')
