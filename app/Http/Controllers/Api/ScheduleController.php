@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ScheduleController extends Controller
 {
-    // method untuk menampilkan data schedule
+    // method untuk menampilkan data schedule hari ini
     public function index()
     {
         // mengambil id user

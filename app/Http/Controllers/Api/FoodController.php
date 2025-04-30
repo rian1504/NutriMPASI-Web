@@ -143,9 +143,12 @@ class FoodController extends Controller
             'name',
             'image',
             'portion',
-            'recipe',
-            'step',
         ]);
+
+        // Konversi string ke array
+        $filteredFood['recipe'] = explode(',', $food->recipe);
+        $filteredFood['fruit'] = explode(',', $food->fruit);
+        $filteredFood['step'] = explode(',', $food->step);
 
         // Hitung jumlah record di tabel food_records yang terkait dengan food ini
         $foodRecordCount = $food->food_records()->count();
@@ -228,7 +231,6 @@ class FoodController extends Controller
 
         // return response JSON
         return response()->json([
-            'data' => $foodRecord,
             'message' => 'Berhasil menyelesaikan memasak',
         ]);
     }
