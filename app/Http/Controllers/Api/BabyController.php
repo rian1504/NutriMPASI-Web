@@ -39,7 +39,7 @@ class BabyController extends Controller
             'gender' => ['required', 'string'],
             'height' => ['nullable', 'numeric'],
             'weight' => ['nullable', 'numeric'],
-            'condition' => ['nullable', 'string', 'min:10'],
+            'condition' => ['nullable', 'string', 'min:3'],
         ]);
 
         // Mengambil id user
@@ -54,6 +54,7 @@ class BabyController extends Controller
             'height' => $request->height,
             'weight' => $request->weight,
             'condition' => $request->condition,
+            'is_profile_complete' => true,
         ]);
 
         // return response JSON
@@ -86,7 +87,7 @@ class BabyController extends Controller
             'gender' => ['required', 'string'],
             'height' => ['nullable', 'numeric'],
             'weight' => ['nullable', 'numeric'],
-            'condition' => ['nullable', 'string', 'min:10'],
+            'condition' => ['nullable', 'string', 'min:3'],
         ]);
 
         // Tambahkan is_profile_complete ke data yang akan diupdate
@@ -129,7 +130,11 @@ class BabyController extends Controller
     public function foodRecommendation(Baby $baby)
     {
         // ambil data rekomendasi makanan bayi
-        $food = FoodRecommendation::where('baby_id', $baby->id)->get();
+        $food = FoodRecommendation::where('baby_id', $baby->id)
+            ->with(['food' => function ($query) {
+                $query->select('id', 'name', 'source', 'image', 'description');
+            }])
+            ->get();
 
         // return response JSON
         return response()->json([

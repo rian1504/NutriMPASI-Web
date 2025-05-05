@@ -31,10 +31,8 @@ class GenerateFoodRecommendations extends Command
     {
         if ($this->option('all')) {
             // Generate untuk semua bayi
-            $babies = Baby::whereNotNull('dob')
-                ->whereNotNull('height')
-                ->whereNotNull('weight')
-                ->get();
+            $babies = Baby::where('is_profile_complete', 1)->get();
+
             $this->info("Generating recommendations for all babies...");
 
             $bar = $this->output->createProgressBar(count($babies));

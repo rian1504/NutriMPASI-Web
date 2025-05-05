@@ -21,6 +21,6 @@ class FoodRecommendation extends Model
 
     public function food(): BelongsTo
     {
-        return $this->belongsTo(Baby::class);
+        return $this->belongsTo(Food::class);
     }
 }

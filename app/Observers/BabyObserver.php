@@ -13,7 +13,18 @@ class BabyObserver
      */
     public function created(Baby $baby): void
     {
-        //
+        if ($baby->wasRecentlyCreated) {
+            try {
+                // Generate rekomendasi baru
+                Artisan::call('food-recommendations:generate', [
+                    'baby_id' => $baby->id
+                ]);
+
+                Log::info("Successfully regenerated recommendations for baby {$baby->id}");
+            } catch (\Exception $e) {
+                Log::error("Failed to refresh recommendations for baby {$baby->id}: " . $e->getMessage());
+            }
+        }
     }
 
     /**

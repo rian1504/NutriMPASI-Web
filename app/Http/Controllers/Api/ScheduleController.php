@@ -18,7 +18,7 @@ class ScheduleController extends Controller
         $userId = Auth::id();
 
         // mengambil data schedule
-        $schedule = Schedule::select('id', 'food_id')
+        $schedule = Schedule::select('id', 'food_id', 'date')
             ->with(['food' => function ($query) {
                 $query->select('id', 'name', 'image');
             }])
@@ -26,14 +26,14 @@ class ScheduleController extends Controller
                 $query->select('id', 'name');
             }])
             ->where('user_id', $userId)
-            ->where('date', date('Y-m-d'))
             ->get()
             ->map(function ($schedule) {
                 return [
                     'id' => $schedule->id,
+                    'date' => $schedule->date,
                     'food_id' => $schedule->food_id,
                     'food' => $schedule->food,
-                    'babies' => $schedule->baby_schedules->pluck('baby')
+                    'babies' => $schedule->baby_schedules->pluck('baby'),
                 ];
             });
 
@@ -133,12 +133,13 @@ class ScheduleController extends Controller
                     'date' => $schedule->date,
                     'babies' => $schedule->baby_schedules->pluck('baby')
                 ];
-            });
+            })
+            ->first();
 
         // return response JSON
         return response()->json([
             'data' => $schedule,
-            'message' => 'Berhasil mengambil data schedule',
+            'message' => 'Berhasil mengambil data edit schedule',
         ]);
     }
 
@@ -171,7 +172,7 @@ class ScheduleController extends Controller
         // return response JSON
         return response()->json([
             'data' => $schedule,
-            'message' => 'Berhasil mengubah jadwal masakan',
+            'message' => 'Berhasil mengubah data schedule',
         ]);
     }
 
@@ -183,7 +184,7 @@ class ScheduleController extends Controller
 
         // return response JSON
         return response()->json([
-            'message' => 'Berhasil menghapus jadwal masakan',
+            'message' => 'Berhasil menghapus data schedule',
         ]);
     }
 }

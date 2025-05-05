@@ -20,7 +20,7 @@ class FoodController extends Controller
         $userId = Auth::id();
 
         // ambil semua data makanan
-        $data = Food::select('id', 'user_id', 'name', 'source', 'image', 'description')
+        $data = Food::select('id', 'food_category_id', 'user_id', 'name', 'source', 'image', 'age', 'description')
             ->withCount('favorites')
             ->withExists([
                 'favorites as is_favorite' => function ($query) use ($userId) {
