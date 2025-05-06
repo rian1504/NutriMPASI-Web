@@ -29,10 +29,16 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withSchedule(function (Schedule $schedule) {
         $schedule->command('food-recommendations:generate --all')
-            ->dailyAt('03:00')
+            ->dailyAt('00:00')
             ->timezone('Asia/Jakarta')
             ->onFailure(function () {
                 Log::error('Failed to run daily food recommendations');
+            });
+        $schedule->command('schedules:delete-expired')
+            ->dailyAt('00:00')
+            ->timezone('Asia/Jakarta')
+            ->onFailure(function () {
+                Log::error('Failed to run daily schedule delete expired');
             });
     })
     ->create();
