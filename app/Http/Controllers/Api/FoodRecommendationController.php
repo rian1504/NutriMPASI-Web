@@ -89,7 +89,12 @@ class FoodRecommendationController extends Controller
         }]);
 
         // filter data yang ingin disembunyikan
-        $food_recommendation = $food_recommendation->makeHidden(['created_at', 'updated_at']);
+        $food_recommendation = $food_recommendation->makeHidden(['source', 'created_at', 'updated_at']);
+
+        // Konversi string ke array
+        $food_recommendation['recipe'] = explode(',', $food_recommendation->recipe);
+        $food_recommendation['fruit'] = explode(',', $food_recommendation->fruit);
+        $food_recommendation['step'] = explode(',', $food_recommendation->step);
 
         // Hitung jumlah record di tabel favorites yang terkait dengan food ini
         $favoriteCount = $food_recommendation->favorites()->count();

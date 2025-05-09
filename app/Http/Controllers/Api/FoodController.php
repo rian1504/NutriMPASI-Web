@@ -95,6 +95,8 @@ class FoodController extends Controller
         // Ambil data food beserta relasi food_category
         $food = $food->load(['food_category' => function ($query) {
             $query->select('id', 'name');
+        }, 'user' => function ($query) {
+            $query->select('id', 'name');
         }]);
 
         // filter data yang ingin disembunyikan
