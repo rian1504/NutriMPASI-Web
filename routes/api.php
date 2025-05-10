@@ -13,7 +13,7 @@ use App\Http\Controllers\Api\ScheduleController;
 use App\Http\Controllers\Api\ThreadUserController;
 use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\NutritionistController;
-use App\Http\Controllers\Api\FoodRecommendationController;
+use App\Http\Controllers\Api\FoodSuggestionController;
 
 // autentikasi
 require __DIR__ . '/auth.php';
@@ -49,9 +49,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     // Nutritionist
     Route::get('nutritionist', [NutritionistController::class, 'index']);
 
-    // Food Recommendation
-    Route::resource('food-recommendation', FoodRecommendationController::class)->except(['create', 'edit', 'update']);
-    Route::post('food-recommendation/{food_recommendation}', [FoodRecommendationController::class, 'update'])->name('food_recommendation.update');
+    // Food Suggestion
+    Route::resource('food-suggestion', FoodSuggestionController::class)->except(['create', 'edit', 'update']);
+    Route::post('food-suggestion/{food_suggestion}', [FoodSuggestionController::class, 'update'])->name('food_recommendation.update');
 
     // Baby
     Route::resource('baby', BabyController::class)->except(['create', 'edit', 'update']);

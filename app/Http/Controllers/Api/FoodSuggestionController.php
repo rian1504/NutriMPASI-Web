@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
-class FoodRecommendationController extends Controller
+class FoodSuggestionController extends Controller
 {
     // method untuk mengambil data makanan berdasarkan user
     public function index()
@@ -81,36 +81,36 @@ class FoodRecommendationController extends Controller
     }
 
     // method untuk menampilkan detail makanan
-    public function show(Food $food_recommendation)
+    public function show(Food $food_suggestion)
     {
         // Ambil data food beserta relasi food_category
-        $food_recommendation = $food_recommendation->load(['food_category' => function ($query) {
+        $food_suggestion = $food_suggestion->load(['food_category' => function ($query) {
             $query->select('id', 'name');
         }]);
 
         // filter data yang ingin disembunyikan
-        $food_recommendation = $food_recommendation->makeHidden(['source', 'created_at', 'updated_at']);
+        $food_suggestion = $food_suggestion->makeHidden(['source', 'created_at', 'updated_at']);
 
         // Konversi string ke array
-        $food_recommendation['recipe'] = explode(',', $food_recommendation->recipe);
-        $food_recommendation['fruit'] = explode(',', $food_recommendation->fruit);
-        $food_recommendation['step'] = explode(',', $food_recommendation->step);
+        $food_suggestion['recipe'] = explode(',', $food_suggestion->recipe);
+        $food_suggestion['fruit'] = explode(',', $food_suggestion->fruit);
+        $food_suggestion['step'] = explode(',', $food_suggestion->step);
 
         // Hitung jumlah record di tabel favorites yang terkait dengan food ini
-        $favoriteCount = $food_recommendation->favorites()->count();
+        $favoriteCount = $food_suggestion->favorites()->count();
 
         // Tambahkan jumlah record ke data yang akan dikembalikan
-        $food_recommendation['favorite_count'] = $favoriteCount;
+        $food_suggestion['favorite_count'] = $favoriteCount;
 
         // return response JSON
         return response()->json([
-            'data' => $food_recommendation,
+            'data' => $food_suggestion,
             'message' => 'Berhasil mengambil detail data makanan user',
         ]);
     }
 
     // method untuk update data makanan
-    public function update(Request $request, Food $food_recommendation)
+    public function update(Request $request, Food $food_suggestion)
     {
         // validasi request
         $validatedData = $request->validate([
@@ -131,8 +131,8 @@ class FoodRecommendationController extends Controller
         // Jika ada gambar baru
         if ($request->hasFile('image')) {
             // Delete image lama
-            if ($food_recommendation->image && Storage::exists($food_recommendation->image)) {
-                Storage::delete($food_recommendation->image);
+            if ($food_suggestion->image && Storage::exists($food_suggestion->image)) {
+                Storage::delete($food_suggestion->image);
             }
 
             // Store image baru
@@ -141,26 +141,26 @@ class FoodRecommendationController extends Controller
         }
 
         // Update data makanan
-        $food_recommendation->update($validatedData);
+        $food_suggestion->update($validatedData);
 
         // return response JSON
         return response()->json([
-            'data' => $food_recommendation,
+            'data' => $food_suggestion,
             'message' => 'Berhasil mengubah data makanan',
         ]);
     }
 
     // method untuk menghapus data makanan
-    public function destroy(Food $food_recommendation)
+    public function destroy(Food $food_suggestion)
     {
         // jika ada image
-        if ($food_recommendation->image && Storage::exists($food_recommendation->image)) {
+        if ($food_suggestion->image && Storage::exists($food_suggestion->image)) {
             // delete image
-            Storage::delete($food_recommendation->image);
+            Storage::delete($food_suggestion->image);
         }
 
         // delete data
-        $food_recommendation->delete();
+        $food_suggestion->delete();
 
         // return response JSON
         return response()->json([
