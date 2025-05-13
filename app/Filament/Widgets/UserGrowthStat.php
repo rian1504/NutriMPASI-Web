@@ -32,7 +32,7 @@ class UserGrowthStat extends BaseWidget
         $growthPercentage = $previousMonthUsers > 0 ? ($growth / $previousMonthUsers) * 100 : 0;
 
         // Hitung total pengguna
-        $totalUsers = User::whereBetween('created_at', [$startDate->subMonth(), $endDate])->where('is_admin', 0)->count();
+        $totalUsers = User::where('is_admin', 0)->count();
 
         return [
             Stat::make('Total Pengguna Bulan Ini', $currentMonthUsers)

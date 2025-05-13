@@ -104,8 +104,6 @@ class FoodController extends Controller
             'fruit',
             'recipe',
             'step',
-            'created_at',
-            'updated_at',
         ]);
 
         // Hitung jumlah record di tabel favorites yang terkait dengan food ini
@@ -214,11 +212,10 @@ class FoodController extends Controller
         // Simpan data ke tabel food_record untuk setiap baby_id
         foreach ($request->baby_id as $babyId) {
             // Simpan data ke tabel food_record
-            $foodRecord = FoodRecord::create([
+            FoodRecord::create([
                 'food_id' => $food->id,
                 'baby_id' => $babyId,
                 'user_id' => $userId,
-                'category' => $food->food_category->value('name'),
                 'name' => $food->name,
                 'source' => $food->source,
                 'image' => 'image/food_records/' . $imageName,
@@ -254,7 +251,7 @@ class FoodController extends Controller
             ->get();
 
         // hidden field
-        $food_record->makeHidden(['user_id', 'baby_id', 'food_id', 'created_at', 'updated_at']);
+        $food_record->makeHidden(['user_id', 'age']);
 
         // Menjumlahkan field protein, fat, dan energy
         $totalEnergy = $food_record->sum('energy');

@@ -96,6 +96,11 @@ class FoodSuggestionController extends Controller
         $food_suggestion['fruit'] = explode(',', $food_suggestion->fruit);
         $food_suggestion['step'] = explode(',', $food_suggestion->step);
 
+        // filter data yang ingin disembunyikan
+        $food_suggestion = $food_suggestion->makeHidden([
+            'user_id'
+        ]);
+
         // Hitung jumlah record di tabel favorites yang terkait dengan food ini
         $favoriteCount = $food_suggestion->favorites()->count();
 
