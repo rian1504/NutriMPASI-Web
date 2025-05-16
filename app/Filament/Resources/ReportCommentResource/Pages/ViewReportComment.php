@@ -42,7 +42,7 @@ class ViewReportComment extends ViewRecord
 
         // Ambil semua laporan yang terkait dengan comment ini
         $reports = Report::where('refers_id', $comment->id)
-            ->where('category_report', 'comment')
+            ->where('category', 'comment')
             ->get();
 
         // Ambil judul thread
@@ -91,7 +91,7 @@ class ViewReportComment extends ViewRecord
 
         // Ambil semua laporan yang terkait dengan comment ini
         $reports = Report::where('refers_id', $comment->id)
-            ->where('category_report', 'comment')
+            ->where('category', 'comment')
             ->get();
 
         // Ambil judul thread

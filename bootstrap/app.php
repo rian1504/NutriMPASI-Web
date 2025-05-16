@@ -40,5 +40,11 @@ return Application::configure(basePath: dirname(__DIR__))
             ->onFailure(function () {
                 Log::error('Failed to run daily schedule delete expired');
             });
+        $schedule->command('schedules:send-tomorrow-notifications')
+            ->dailyAt('21:00')
+            ->timezone('Asia/Jakarta')
+            ->onFailure(function () {
+                Log::error('Failed to run daily schedule notifications');
+            });
     })
     ->create();

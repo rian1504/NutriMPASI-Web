@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->enum('category_report', ['food', 'thread', 'comment']);
+            $table->enum('category', ['food', 'thread', 'comment']);
             $table->integer('refers_id');
             $table->text('content');
             $table->timestamps();

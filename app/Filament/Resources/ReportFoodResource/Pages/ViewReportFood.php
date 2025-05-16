@@ -43,7 +43,7 @@ class ViewReportFood extends ViewRecord
 
         // Ambil semua laporan yang terkait dengan food ini
         $reports = Report::where('refers_id', $food->id)
-            ->where('category_report', 'food')
+            ->where('category', 'food')
             ->get();
 
         // Kirim notifikasi ke pemilik food
@@ -95,7 +95,7 @@ class ViewReportFood extends ViewRecord
 
         // Ambil semua laporan yang terkait dengan food ini
         $reports = Report::where('refers_id', $food->id)
-            ->where('category_report', 'food')
+            ->where('category', 'food')
             ->get();
 
         // Kirim notifikasi ke masing-masing user yang melaporkan

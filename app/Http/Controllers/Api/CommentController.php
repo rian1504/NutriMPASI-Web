@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
+use App\Models\Notification;
+use App\Models\Thread;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,11 +23,23 @@ class CommentController extends Controller
         // Mengambil id user
         $userId = Auth::user()->id;
 
+        // Cari thread terkait (untuk notifikasi)
+        $thread = Thread::findOrFail($request->thread_id);
+
         // membuat data comment
         $comment = Comment::create([
             'user_id' => $userId,
-            'thread_id' => $request->thread_id,
+            'thread_id' => $thread->id,
             'content' => $request->content,
+        ]);
+
+        // Buat notifikasi untuk pemilik thread
+        Notification::create([
+            'user_id' => $thread->user_id,
+            'actor_user_id' => $userId,
+            'category' => 'comment',
+            'refers_id' => $comment->id,
+            'title' => Auth::user()->name . ' mengomentari postingan Anda',
         ]);
 
         // return response JSON
@@ -56,6 +70,11 @@ class CommentController extends Controller
     // method untuk menghapus data comment
     public function destroy(Comment $comment)
     {
+        // Hapus notifikasi terkait komentar ini
+        Notification::where('category', 'comment')
+            ->where('refers_id', $comment->id)
+            ->delete();
+
         // Hapus data comment
         $comment->delete();
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Like;
+use App\Models\Notification;
 use App\Models\Thread;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -45,9 +46,27 @@ class LikeController extends Controller
         $thread->likes()->toggle($userId);
 
         // cek apakah user sudah menyukai thread ini
-        $islike = $thread->likes()->where('user_id', $userId)->exists();
+        $isLike = $thread->likes()->where('user_id', $userId)->exists();
 
-        $message = $islike
+        if ($isLike) {
+            // Buat notifikasi untuk pemilik thread
+            Notification::create([
+                'user_id' => $thread->user_id,
+                'actor_user_id' => $userId,
+                'category' => 'thread',
+                'refers_id' => $thread->id,
+                'title' => Auth::user()->name . ' menyukai postingan Anda',
+            ]);
+        } else {
+            // Hapus notifikasi jika like dihapus
+            $thread->user->notifications()
+                ->where('category', 'thread')
+                ->where('actor_user_id', $userId)
+                ->where('refers_id', $thread->id)
+                ->delete();
+        }
+
+        $message = $isLike
             ? 'Berhasil menyukai thread'
             : 'Berhasil menghapus thread dari like';
 

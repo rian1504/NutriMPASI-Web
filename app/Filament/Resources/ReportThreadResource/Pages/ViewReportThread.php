@@ -41,24 +41,24 @@ class ViewReportThread extends ViewRecord
 
         // Ambil semua laporan yang terkait dengan thread ini
         $reports = Report::where('refers_id', $thread->id)
-            ->where('category_report', 'thread')
+            ->where('category', 'thread')
             ->get();
 
         // Kirim notifikasi ke pemilik thread
         Notification::create([
             'user_id' => $thread->user_id,
-            'title' => 'Laporan Thread Dihapus',
-            'content' => 'Thread anda dengan judul thread: "' . $thread->title . '" telah dihapus karena melanggar beberapa peraturan',
+            'title' => 'Laporan Postingan Dihapus',
+            'content' => 'Postingan anda dengan judul: "' . $thread->title . '" telah dihapus karena melanggar beberapa peraturan',
         ]);
 
         // Kirim notifikasi ke masing-masing user yang melaporkan
         foreach ($reports as $report) {
             Notification::create([
                 'user_id' => $report->user_id,
-                'title' => 'Laporan Thread Diterima',
+                'title' => 'Laporan Postingan Diterima',
                 'content' =>
                 <<<EOD
-                Laporan Anda mengenai thread dengan judul "$thread->title" telah diterima dan thread telah dihapus.
+                Laporan Anda mengenai postingan dengan judul "$thread->title" telah diterima dan postingan telah dihapus.
                 Terima kasih sudah melaporkan😻😻
                 EOD,
             ]);
@@ -87,17 +87,17 @@ class ViewReportThread extends ViewRecord
 
         // Ambil semua laporan yang terkait dengan thread ini
         $reports = Report::where('refers_id', $thread->id)
-            ->where('category_report', 'thread')
+            ->where('category', 'thread')
             ->get();
 
         // Kirim notifikasi ke masing-masing user yang melaporkan
         foreach ($reports as $report) {
             Notification::create([
                 'user_id' => $report->user_id,
-                'title' => 'Laporan Thread Ditolak',
+                'title' => 'Laporan Postingan Ditolak',
                 'content' =>
                 <<<EOD
-                Laporan Anda mengenai thread dengan judul "$thread->title" telah ditolak.
+                Laporan Anda mengenai postingan dengan judul "$thread->title" telah ditolak.
                 Terima kasih sudah melaporkan😻😻
                 EOD,
             ]);

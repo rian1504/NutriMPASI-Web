@@ -14,8 +14,11 @@ return new class extends Migration
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('actor_user_id')->nullable()->constrained('users')->cascadeOnDelete();
+            $table->enum('category', ['report', 'thread', 'comment', 'schedule']);
+            $table->integer('refers_id')->nullable();
             $table->string('title');
-            $table->text('content');
+            $table->text('content')->nullable();
             $table->boolean('is_read')->default(false);
             $table->timestamps();
         });

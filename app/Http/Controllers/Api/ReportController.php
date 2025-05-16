@@ -31,7 +31,7 @@ class ReportController extends Controller
 
         // Cek apakah user sudah melaporkan referensi yang sama sebelumnya
         $existingReport = Report::where('user_id', $userId)
-            ->where('category_report', $category)
+            ->where('category', $category)
             ->where('refers_id', $request->refers_id)
             ->first();
 
@@ -44,7 +44,7 @@ class ReportController extends Controller
         // Buat laporan baru
         $report = Report::create([
             'user_id' => $userId,
-            'category_report' => $category,
+            'category' => $category,
             'refers_id' => $request->refers_id,
             'content' => $request->content,
         ]);
