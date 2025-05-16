@@ -43,9 +43,9 @@ class FoodSuggestionController extends Controller
             'fat' => ['required', 'numeric'],
             'portion' => ['required', 'integer'],
             'fruit' => ['nullable', 'string'],
-            'recipe' => ['required', 'string', 'min:20'],
-            'step' => ['required', 'string', 'min:20'],
-            'description' => ['required', 'string', 'min:10'],
+            'recipe' => ['required', 'string', 'min:5'],
+            'step' => ['required', 'string', 'min:5'],
+            'description' => ['required', 'string', 'min:5'],
         ]);
 
         // Mengambil id user
@@ -121,16 +121,16 @@ class FoodSuggestionController extends Controller
         $validatedData = $request->validate([
             'food_category_id' => ['required', 'integer'],
             'name' => ['required', 'string', 'min:4', 'max:255'],
-            'image' => ['required', 'image', 'mimes:jpg,jpeg,png', 'max:1024'],
+            'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:1024'],
             'age' => ['required', 'string'],
             'energy' => ['required', 'numeric'],
             'protein' => ['required', 'numeric'],
             'fat' => ['required', 'numeric'],
             'portion' => ['required', 'integer'],
             'fruit' => ['nullable', 'string'],
-            'recipe' => ['required', 'string', 'min:20'],
-            'step' => ['required', 'string', 'min:20'],
-            'description' => ['required', 'string', 'min:10'],
+            'recipe' => ['required', 'string', 'min:5'],
+            'step' => ['required', 'string', 'min:5'],
+            'description' => ['required', 'string', 'min:5'],
         ]);
 
         // Jika ada gambar baru
