@@ -93,7 +93,7 @@ class ReportThreadResource extends Resource
     {
         return parent::getEloquentQuery()
             ->whereHas('reports', function ($query) {
-                $query->where('category_report', 'thread');
+                $query->where('category', 'thread');
             })
             ->withCount('reports');
     }

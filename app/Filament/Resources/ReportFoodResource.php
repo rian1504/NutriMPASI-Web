@@ -136,7 +136,7 @@ class ReportFoodResource extends Resource
     {
         return parent::getEloquentQuery()
             ->whereHas('reports', function ($query) {
-                $query->where('category_report', 'food');
+                $query->where('category', 'food');
             })
             ->withCount('reports');
     }

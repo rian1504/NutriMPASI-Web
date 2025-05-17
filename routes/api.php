@@ -24,10 +24,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('', [FoodController::class, 'index']);
         Route::get('category', [FoodController::class, 'category']);
         Route::post('filter', [FoodController::class, 'filter']);
+        Route::get('record', [FoodController::class, 'foodRecord']);
         Route::get('{food}', [FoodController::class, 'show']);
         Route::get('{food}/cook', [FoodController::class, 'showCookingGuide']);
         Route::post('{food}/cook/complete', [FoodController::class, 'completeCooking']);
-        Route::post('record', [FoodController::class, 'foodRecord']);
     });
 
     // Favorite Food
@@ -81,7 +81,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     // Notification
     Route::prefix('notification')->group(function () {
         Route::get('', [NotificationController::class, 'index']);
-        Route::post('{notification}', [NotificationController::class, 'update']);
+        Route::post('', [NotificationController::class, 'readAll']);
+        Route::post('{notification}', [NotificationController::class, 'read']);
     });
 
     // Profil

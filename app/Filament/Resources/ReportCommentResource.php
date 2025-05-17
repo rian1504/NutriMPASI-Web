@@ -99,7 +99,7 @@ class ReportCommentResource extends Resource
     {
         return parent::getEloquentQuery()
             ->whereHas('reports', function ($query) {
-                $query->where('category_report', 'comment');
+                $query->where('category', 'comment');
             })
             ->withCount('reports');
     }
