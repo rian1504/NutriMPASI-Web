@@ -33,6 +33,6 @@ class Thread extends Model
 
     public function reports(): HasMany
     {
-        return $this->hasMany(Report::class, 'refers_id')->where('category_report', 'thread');
+        return $this->hasMany(Report::class, 'refers_id')->where('category', 'thread');
     }
 }

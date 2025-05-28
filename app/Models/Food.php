@@ -46,7 +46,7 @@ class Food extends Model
 
     public function reports(): HasMany
     {
-        return $this->hasMany(Report::class, 'refers_id')->where('category_report', 'food');
+        return $this->hasMany(Report::class, 'refers_id')->where('category', 'food');
     }
 
     public function food_recommendations(): HasMany
