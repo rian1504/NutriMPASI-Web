@@ -22,8 +22,10 @@ class LikeController extends Controller
             ->with([
                 'thread' => function ($query) {
                     $query->with(['user' => function ($query) {
-                        $query->select('id', 'name');
-                    }]);
+                        $query->select('id', 'name', 'avatar');
+                    }])
+                        ->withCount('likes')
+                        ->withCount('comments');
                 }
             ])
             ->where('user_id', $userId)
@@ -49,14 +51,16 @@ class LikeController extends Controller
         $isLike = $thread->likes()->where('user_id', $userId)->exists();
 
         if ($isLike) {
-            // Buat notifikasi untuk pemilik thread
-            Notification::create([
-                'user_id' => $thread->user_id,
-                'actor_user_id' => $userId,
-                'category' => 'thread',
-                'refers_id' => $thread->id,
-                'title' => Auth::user()->name . ' menyukai postingan Anda',
-            ]);
+            if ($thread->user_id != $userId) {
+                // Buat notifikasi untuk pemilik thread
+                Notification::create([
+                    'user_id' => $thread->user_id,
+                    'actor_user_id' => $userId,
+                    'category' => 'thread',
+                    'refers_id' => $thread->id,
+                    'title' => Auth::user()->name . ' menyukai postingan Anda',
+                ]);
+            }
         } else {
             // Hapus notifikasi jika like dihapus
             $thread->user->notifications()

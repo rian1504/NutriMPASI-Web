@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Thread;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ThreadController extends Controller
@@ -12,17 +11,19 @@ class ThreadController extends Controller
     // method untuk mengambil semua data thread
     public function index()
     {
-        // ambil data thread dengan pagination 10 data
-        $data = Thread::withCount('likes')->paginate(10);
-
         // mengambil id user
         $userId = Auth::id();
 
-        // looping data
-        $data->each(function ($thread) use ($userId) {
-            // Cek apakah user sudah menyukai thread ini
-            $thread['is_like'] = $thread->likes()->where('user_id', $userId)->exists();
-        });
+        // ambil semua data thread
+        $data = Thread::withCount('likes')
+            ->withCount('comments')
+            ->withExists([
+                'likes as is_like' => function ($query) use ($userId) {
+                    $query->where('user_id', $userId);
+                }
+            ])
+            ->with('user:id,name,avatar')
+            ->inRandomOrder()->get();
 
         // return response JSON
         return response()->json([
@@ -34,17 +35,25 @@ class ThreadController extends Controller
     // method untuk menampilkan detail data thread
     public function show(Thread $thread)
     {
+        // mengambil id user
+        $userId = Auth::id();
+
         // Ambil data thread beserta relasi user dan comments
         $thread->load([
             'user' => function ($query) {
-                $query->select('id', 'name');
+                $query->select('id', 'name', 'avatar');
             },
             'comments' => function ($query) {
                 $query->with(['user' => function ($query) {
-                    $query->select('id', 'name');
-                }]);
+                    $query->select('id', 'name', 'avatar');
+                }])->orderBy('created_at', 'desc');
             }
-        ]);
+        ])->loadCount('comments')->loadCount('likes')
+            ->loadExists([
+                'likes as is_like' => function ($query) use ($userId) {
+                    $query->where('user_id', $userId);
+                }
+            ]);
 
         // hidden field
         $thread->makeHidden(['user_id']);

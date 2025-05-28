@@ -19,7 +19,7 @@ class FavoriteController extends Controller
         // mengambil data favorites berdasarkan user
         $favorites = Favorite::select('food_id')
             ->with(['food' => function ($query) {
-                $query->select('id', 'name', 'image');
+                $query->select('id', 'name', 'image', 'description');
             }])
             ->where('user_id', $userId)
             ->get();

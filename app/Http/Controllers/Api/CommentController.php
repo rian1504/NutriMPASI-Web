@@ -33,14 +33,21 @@ class CommentController extends Controller
             'content' => $request->content,
         ]);
 
-        // Buat notifikasi untuk pemilik thread
-        Notification::create([
-            'user_id' => $thread->user_id,
-            'actor_user_id' => $userId,
-            'category' => 'comment',
-            'refers_id' => $comment->id,
-            'title' => Auth::user()->name . ' mengomentari postingan Anda',
-        ]);
+        if ($thread->user_id != $userId) {
+            // Buat notifikasi untuk pemilik thread
+            Notification::create([
+                'user_id' => $thread->user_id,
+                'actor_user_id' => $userId,
+                'category' => 'comment',
+                'refers_id' => $comment->id,
+                'title' => Auth::user()->name . ' mengomentari postingan Anda',
+            ]);
+        }
+
+        // Mengambil data user yang membuat komentar
+        $comment->load(['user' => function ($query) {
+            $query->select('id', 'name', 'avatar');
+        }]);
 
         // return response JSON
         return response()->json([
