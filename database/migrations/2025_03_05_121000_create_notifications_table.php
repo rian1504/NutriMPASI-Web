@@ -16,7 +16,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('actor_user_id')->nullable()->constrained('users')->cascadeOnDelete();
             $table->enum('category', ['report', 'thread', 'comment', 'schedule']);
-            $table->integer('refers_id')->nullable();
+            $table->integer('thread_id')->nullable();
+            $table->integer('comment_id')->nullable();
             $table->string('title');
             $table->text('content')->nullable();
             $table->boolean('is_read')->default(false);

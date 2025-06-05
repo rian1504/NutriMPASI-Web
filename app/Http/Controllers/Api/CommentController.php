@@ -39,7 +39,8 @@ class CommentController extends Controller
                 'user_id' => $thread->user_id,
                 'actor_user_id' => $userId,
                 'category' => 'comment',
-                'refers_id' => $comment->id,
+                'thread_id' => $thread->id,
+                'comment_id' => $comment->id,
                 'title' => Auth::user()->name . ' mengomentari postingan Anda',
             ]);
         }
@@ -79,7 +80,7 @@ class CommentController extends Controller
     {
         // Hapus notifikasi terkait komentar ini
         Notification::where('category', 'comment')
-            ->where('refers_id', $comment->id)
+            ->where('comment_id', $comment->id)
             ->delete();
 
         // Hapus data comment

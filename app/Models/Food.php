@@ -16,7 +16,7 @@ class Food extends Model
     protected $guarded = ['id'];
 
     // hidden field
-    protected $hidden = ['created_at', 'updated_at'];
+    protected $hidden = ['updated_at'];
 
     // Define the relationship
     public function food_category(): BelongsTo

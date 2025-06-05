@@ -57,7 +57,7 @@ class LikeController extends Controller
                     'user_id' => $thread->user_id,
                     'actor_user_id' => $userId,
                     'category' => 'thread',
-                    'refers_id' => $thread->id,
+                    'thread_id' => $thread->id,
                     'title' => Auth::user()->name . ' menyukai postingan Anda',
                 ]);
             }
@@ -66,7 +66,7 @@ class LikeController extends Controller
             $thread->user->notifications()
                 ->where('category', 'thread')
                 ->where('actor_user_id', $userId)
-                ->where('refers_id', $thread->id)
+                ->where('thread_id', $thread->id)
                 ->delete();
         }
 
