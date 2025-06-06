@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <!-- Hero Section -->
+    <!-- Bagian Hero -->
     <section class="relative overflow-hidden py-16 bg-gradient-to-b from-amber-500 via-amber-500 to-white">
         <div class="container mx-auto px-4 relative z-10">
             <div class="flex flex-wrap items-center">
@@ -29,7 +29,7 @@
         </div>
     </section>
 
-    <!-- Download Section -->
+    <!-- Bagian Unduhan -->
     <section class="bg-[#242A41] py-16 text-white">
         <div class="container mx-auto px-4">
             <div class="flex flex-wrap items-center">
@@ -67,7 +67,7 @@
         </div>
     </section>
 
-    <!-- Tentang Aplikasi Section -->
+    <!-- Bagian Tentang Aplikasi -->
     <section id="produk" class="bg-gray-50 py-16">
         <div class="container mx-auto px-4">
             <div class="text-center mb-12" data-aos="fade-up">
@@ -85,7 +85,7 @@
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Card 1 -->
+                <!-- Kartu 1 -->
                 <div class="bg-white rounded-lg shadow-md p-6 text-center transition-transform hover:scale-105" data-aos="fade-up" data-aos-delay="100">
                     <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
                         <img src="{{ asset('image/icons/recommend_icon.png') }}" alt="Merekomendasikan" class="w-12 h-12">
@@ -96,7 +96,7 @@
                     </p>
                 </div>
                 
-                <!-- Card 2 -->
+                <!-- Kartu 2 -->
                 <div class="bg-white rounded-lg shadow-md p-6 text-center transition-transform hover:scale-105" data-aos="fade-up" data-aos-delay="200">
                     <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
                         <img src="{{ asset('image/icons/schedule_icon.png') }}" alt="Merencanakan" class="w-12 h-12">
@@ -107,7 +107,7 @@
                     </p>
                 </div>
                 
-                <!-- Card 3 -->
+                <!-- Kartu 3 -->
                 <div class="bg-white rounded-lg shadow-md p-6 text-center transition-transform hover:scale-105" data-aos="fade-up" data-aos-delay="300">
                     <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
                         <img src="{{ asset('image/icons/notes_icon.png') }}" alt="Mencatat" class="w-12 h-12">
@@ -121,7 +121,7 @@
         </div>
     </section>
 
-    <!-- Keunggulan Aplikasi Section -->
+    <!-- Bagian Keunggulan Aplikasi -->
     <section class="bg-white py-16">
         <div class="container mx-auto px-4">
             <div class="flex flex-wrap items-center">
@@ -135,7 +135,7 @@
                         <h2 class="text-3xl font-bold text-gray-800 mb-8"><span class="text-[#5966B1]">Keunggulan</span> <span class="text-[#F59E0B]">Aplikasi</span></h2>
                         <p class="text-gray-600 mb-10">Kenapa harus download NutriMPASI?</p>
                         
-                        <!-- Feature 1 -->
+                        <!-- Fitur 1 -->
                         <div class="flex mb-8" data-aos="fade-up" data-aos-delay="300">
                             <div class="bg-[#F59E0B] rounded-lg p-3 mr-4 h-12 w-12 flex items-center justify-center flex-shrink-0">
                                 <img src="{{ asset('image/icons/user_icon.png') }}" alt="UI Ramah" class="w-6 h-6">
@@ -146,7 +146,7 @@
                             </div>
                         </div>
                         
-                        <!-- Feature 2 -->
+                        <!-- Fitur 2 -->
                         <div class="flex mb-8" data-aos="fade-up" data-aos-delay="400">
                             <div class="bg-[#F59E0B] rounded-lg p-3 mr-4 h-12 w-12 flex items-center justify-center flex-shrink-0">
                                 <img src="{{ asset('image/icons/ai_icon.png') }}" alt="AI" class="w-6 h-6">
@@ -157,7 +157,7 @@
                             </div>
                         </div>
                         
-                        <!-- Feature 3 -->
+                        <!-- Fitur 3 -->
                         <div class="flex" data-aos="fade-up" data-aos-delay="500">
                             <div class="bg-[#F59E0B] rounded-lg p-3 mr-4 h-12 w-12 flex items-center justify-center flex-shrink-0">
                                 <img src="{{ asset('image/icons/steps_icon.png') }}" alt="Fitur" class="w-6 h-6">
@@ -173,7 +173,7 @@
         </div>
     </section>
 
-    <!-- Fitur Unggulan Section -->
+    <!-- Bagian Fitur Unggulan -->
     <section id="fitur" class="relative pb-40">
         <div class="bg-[#242A41] absolute top-0 left-0 w-full h-1/2"></div>
         <div class="container mx-auto px-4 relative pt-20">
@@ -192,7 +192,7 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Feature Card 1: Resep Usulan -->
+                <!-- Kartu Fitur 1: Resep Usulan -->
                 <div class="bg-white rounded-lg overflow-hidden shadow-lg relative" data-aos="flip-left" data-aos-delay="100">
                     <div class="absolute w-[80%] sm:w-[400px] md:w-[500px] h-[400px] md:h-[500px] rounded-full yellow-radial-gradient top-[35%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-0 max-w-full"></div>
                     <div class="p-8 text-center relative z-10">
@@ -206,7 +206,7 @@
                     </div>
                 </div>
 
-                <!-- Feature Card 2: Kalkulator Gizi (Reversed Order) -->
+                <!-- Kartu Fitur 2: Kalkulator Gizi -->
                 <div class="bg-white rounded-lg overflow-hidden shadow-lg relative" data-aos="flip-up" data-aos-delay="200">
                     <div class="absolute w-[80%] sm:w-[400px] md:w-[500px] h-[400px] md:h-[500px] rounded-full yellow-radial-gradient top-[65%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-0 max-w-full"></div>
                     <div class="bg-gray-50 px-4 relative z-10">
@@ -220,7 +220,7 @@
                     </div>
                 </div>
 
-                <!-- Feature Card 3: Riwayat Memasak -->
+                <!-- Kartu Fitur 3: Riwayat Memasak -->
                 <div class="bg-white rounded-lg overflow-hidden shadow-lg relative" data-aos="flip-right" data-aos-delay="300">
                     <div class="absolute w-[80%] sm:w-[400px] md:w-[500px] h-[400px] md:h-[500px] rounded-full yellow-radial-gradient top-[35%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-0 max-w-full"></div>
                     <div class="p-8 text-center relative z-10">
@@ -237,7 +237,7 @@
         </div>
     </section>
 
-    <!-- Demo Aplikasi Section -->
+    <!-- Bagian Demo Aplikasi -->
     <section class="bg-gradient-to-b from-white to-amber-100/90 py-16 mb-20">
         <div class="container mx-auto px-4">
             <div class="text-center mb-10" data-aos="fade-up">
@@ -249,7 +249,7 @@
             
             <div class="max-w-4xl mx-auto pb-24" data-aos="zoom-in" data-aos-delay="200">
                 <div class="relative rounded-xl overflow-hidden shadow-lg aspect-video bg-black">
-                    <!-- Video Player -->
+                    <!-- Player Video -->
                     <iframe 
                         class="absolute top-0 left-0 w-full h-full" 
                         src="https://www.youtube.com/embed/Bgm0g5Gtyfk?si=94wQnmB2XTSBOjRT" 
@@ -260,21 +260,21 @@
                     </iframe>
                     
                     <div class="absolute top-0 left-0 w-full h-full flex items-center justify-center video-fallback hidden">
-                        <!-- Play Button -->
+                        <!-- Tombol Putar -->
                         <button class="w-16 h-16 rounded-full bg-[#F59E0B] flex items-center justify-center transition-transform hover:scale-110">
                             <svg class="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
                             </svg>
                         </button>
                         
-                        <!-- Info Button (top right) -->
+                        <!-- Tombol Info -->
                         <button class="absolute top-4 right-4 bg-white/20 backdrop-blur-sm p-2 rounded-full">
                             <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
                             </svg>
                         </button>
                         
-                        <!-- Video Controls (bottom) -->
+                        <!-- Kontrol Video -->
                         <div class="absolute bottom-0 left-0 w-full px-4 py-3 bg-gradient-to-t from-black/70 to-transparent">
                             <div class="flex items-center">
                                 <button class="text-white mr-2">
@@ -320,7 +320,7 @@
         </div>
     </section>
 
-    <!-- Tentang Kami Section -->
+    <!-- Bagian Tentang Kami -->
     <section id="tentang-kami" class="relative py-20">
         <div class="absolute -top-20 left-0 right-0 h-28 bg-[#242A41]"></div>
         <div class="absolute top-0 left-0 right-0 h-24 bg-[#5966B1]/90 -skew-y-3 transform origin-top-left z-0 flex items-center justify-center">
@@ -332,7 +332,7 @@
                 <p class="text-gray-800 text-lg">— Tim di Balik NutriMPASI [ PBL IF-08 ]</p>
             </div>
             
-            <!-- Main Team Member (Manager) -->
+            <!-- Anggota Tim Utama -->
             <div class="max-w-xs mx-auto mb-16" data-aos="zoom-in" data-aos-delay="100">
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden">
                     <div class="aspect-square">
@@ -365,9 +365,9 @@
                 </div>
             </div>
             
-            <!-- Team Members Grid -->
+            <!-- Grid Anggota Tim -->
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-12">
-                <!-- Team Member 1 -->
+                <!-- Anggota Tim 1 -->
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden" data-aos="fade-up" data-aos-delay="100">
                     <div class="aspect-square">
                         <img src="{{ asset('image/photos/rian_abdullah.png') }}" alt="Rian Abdullah" class="w-full h-full object-cover">
@@ -387,7 +387,7 @@
                     </div>
                 </div>
                 
-                <!-- Team Member 2 -->
+                <!-- Anggota Tim 2 -->
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden" data-aos="fade-up" data-aos-delay="200">
                     <div class="aspect-square">
                         <img src="{{ asset('image/photos/lea_antony.png') }}" alt="Lea Antony" class="w-full h-full object-cover">
@@ -407,7 +407,7 @@
                     </div>
                 </div>
                 
-                <!-- Team Member 3 -->
+                <!-- Anggota Tim 3 -->
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden" data-aos="fade-up" data-aos-delay="300">
                     <div class="aspect-square">
                         <img src="{{ asset('image/photos/pipit_lolita.png') }}" alt="Pipit Lolita Hapsari" class="w-full h-full object-cover">
@@ -426,7 +426,7 @@
                     </div>
                 </div>
                 
-                <!-- Team Member 4 -->
+                <!-- Anggota Tim 4 -->
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden" data-aos="fade-up" data-aos-delay="400">
                     <div class="aspect-square">
                         <img src="{{ asset('image/photos/firmansyah_pramudia.png') }}" alt="Firmansyah Pramudia" class="w-full h-full object-cover">
@@ -448,7 +448,7 @@
         </div>
     </section>
 
-    <!-- Kontak Section -->
+    <!-- Bagian Kontak -->
     <section id="kontak" class="py-20">
         <div class="container mx-auto mt-12">
             <div class="relative mx-auto">
@@ -460,7 +460,6 @@
                     >
                 </div>
                 
-                <!-- Black rounded box -->
                 <div class="bg-black rounded-3xl overflow-hidden py-8 sm:py-12 px-6 sm:px-8 sm:pt-12" data-aos="fade-right">
                     <div class="flex flex-wrap items-center">
                         <div class="w-full md:w-3/5 pl-2 sm:pl-4">
@@ -488,12 +487,12 @@
 
 @push('scripts')
 <script>
-    // Mobile menu toggle
+    // Toggle menu mobile
     document.querySelector('button.md\\:hidden').addEventListener('click', function() {
-        // Add mobile menu functionality here if needed
+        // Tambahkan fungsi menu mobile di sini jika diperlukan
     });
 
-    // Add scroll animation listener to refresh AOS when navigating between sections
+    // Tambahkan listener animasi scroll untuk memperbarui AOS saat navigasi antar seksi
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function() {
             setTimeout(function() {

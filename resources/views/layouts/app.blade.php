@@ -9,7 +9,7 @@
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
     
-    <!-- Fonts -->
+    <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- AOS CSS -->
@@ -36,7 +36,7 @@
         }
     </script>
     
-    <!-- Custom Styles -->
+    <!-- Gaya Kustom -->
     <style>
         html, body {
             overflow-x: hidden;
@@ -56,7 +56,7 @@
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
         
-        /* Simple fade-in animation for mobile menu */
+        /* Animasi fade-in untuk menu mobile */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -71,7 +71,7 @@
 </head>
 <body class="antialiased">
     <div id="app" class="overflow-hidden">
-        <!-- Navbar - Fixed position -->
+        <!-- Navbar -->
         <nav class="bg-white shadow-navbar py-4 fixed top-0 left-0 right-0 w-full z-50">
             <div class="container mx-auto px-4 flex justify-between items-center">
                 <a href="#" class="flex items-center">
@@ -92,7 +92,7 @@
                 </button>
             </div>
 
-            <!-- Mobile Menu (Hidden by default) -->
+            <!-- Menu Mobile -->
             <div id="mobile-menu" class="md:hidden bg-white absolute w-full left-0 top-full z-20 shadow-lg hidden">
                 <div class="py-2 px-4 space-y-3">
                     <a href="#top" class="mobile-nav-link block py-2 px-4 text-gray-700 hover:text-[#F59E0B] hover:bg-gray-50 font-medium hover:border-l-4 hover:border-[#F59E0B]" data-section="top">Beranda</a>
@@ -106,14 +106,14 @@
 
         <div class="h-[72px]"></div>
 
-        <!-- Main Content -->
+        <!-- Konten Utama -->
         @yield('content')
         
         <!-- Footer -->
         <footer class="bg-[#F59E0B] py-12 text-white">
             <div class="container mx-auto px-4">
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                    <!-- Column 1: Logo & Description -->
+                    <!-- Kolom 1: Logo & Deskripsi -->
                     <div class="col-span-1">
                         <div class="flex items-center mb-4">
                             <div class="bg-white p-2 rounded-full mr-3">
@@ -126,7 +126,7 @@
                         </p>
                     </div>
 
-                    <!-- Column 2: Tautan Proyek -->
+                    <!-- Kolom 2: Tautan Proyek -->
                     <div class="col-span-1">
                         <h3 class="text-xl font-bold mb-4">Tautan Proyek</h3>
                         <ul class="space-y-2">
@@ -136,7 +136,7 @@
                         </ul>
                     </div>
 
-                    <!-- Column 3: Halaman -->
+                    <!-- Kolom 3: Halaman -->
                     <div class="col-span-1">
                         <h3 class="text-xl font-bold mb-4">Halaman</h3>
                         <ul class="space-y-2">
@@ -147,7 +147,7 @@
                         </ul>
                     </div>
 
-                    <!-- Column 4: Kontak -->
+                    <!-- Kolom 4: Kontak -->
                     <div class="col-span-1">
                         <h3 class="text-xl font-bold mb-4">Kontak</h3>
                         <p class="mb-4">Batam, Kepulauan Riau</p>
@@ -166,7 +166,7 @@
                     </div>
                 </div>
 
-                <!-- Copyright -->
+                <!-- Hak Cipta -->
                 <div class="mt-12 pt-8 border-t border-white/20 text-center">
                     <p>© 2025 NutriMPASI. All rights reserved.</p>
                 </div>
@@ -174,31 +174,30 @@
         </footer>
     </div>
     
-    <!-- Mobile menu toggle script and scrollspy -->
+    <!-- Skrip toggle menu mobile dan scrollspy -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Mobile menu functionality
+            // Fungsi menu mobile
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
 
             mobileMenuButton.addEventListener('click', function() {
                 if (mobileMenu.classList.contains('hidden')) {
                     mobileMenu.classList.remove('hidden');
-                    // Add animation
                     mobileMenu.classList.add('animate-fadeIn');
                 } else {
                     mobileMenu.classList.add('hidden');
                 }
             });
 
-            // Close menu when clicking on a mobile menu item
+            // Tutup menu saat klik pada item menu mobile
             document.querySelectorAll('#mobile-menu a').forEach(link => {
                 link.addEventListener('click', function() {
                     mobileMenu.classList.add('hidden');
                 });
             });
 
-            // Close mobile menu when clicking outside
+            // Tutup menu mobile saat klik diluar menu
             document.addEventListener('click', function(event) {
                 const isClickInsideMenu = mobileMenu.contains(event.target);
                 const isClickOnButton = mobileMenuButton.contains(event.target);
@@ -208,16 +207,16 @@
                 }
             });
 
-            // Scrollspy functionality
+            // Fungsi scrollspy
             const sections = document.querySelectorAll('section[id]');
             const navLinks = document.querySelectorAll('.nav-link');
             const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
             
-            // Set Beranda as active by default
+            // Atur Beranda sebagai aktif secara default
             setActiveLink('top');
             
             function setActiveLink(sectionId) {
-                // Desktop nav links
+                // Link navigasi desktop
                 navLinks.forEach(link => {
                     if (link.dataset.section === sectionId) {
                         link.classList.add('text-[#F59E0B]');
@@ -228,7 +227,7 @@
                     }
                 });
                 
-                // Mobile nav links
+                // Link navigasi mobile
                 mobileNavLinks.forEach(link => {
                     if (link.dataset.section === sectionId) {
                         link.classList.add('text-[#F59E0B]', 'border-l-4', 'border-[#F59E0B]');
@@ -251,22 +250,18 @@
                     document.documentElement.offsetHeight
                 );
                 
-                // Special case for top of page - always highlight Beranda
                 if (scrollPos < 200) {
                     setActiveLink('top');
                     return;
                 }
                 
-                // Special case for bottom of page (Kontak section)
                 if (scrollPos + windowHeight >= documentHeight - 50) {
                     setActiveLink('kontak');
                     return;
                 }
                 
-                // Track which section is currently visible
                 let visibleSections = [];
                 
-                // Check each section's visibility
                 sections.forEach(section => {
                     const sectionId = section.getAttribute('id');
                     const rect = section.getBoundingClientRect();
@@ -274,7 +269,6 @@
                     const sectionBottom = rect.bottom + scrollPos;
                     const sectionHeight = rect.height;
                     
-                    // A section is considered "visible" if:
                     const viewportMid = scrollPos + windowHeight/3;
                     const largeSection = sectionHeight > windowHeight * 0.7;
                     
@@ -289,13 +283,10 @@
                     }
                 });
                 
-                // If we have visible sections, highlight the one with the most visible area or the one at the top
                 if (visibleSections.length > 0) {
-                    // Sort by visible area (largest first)
                     visibleSections.sort((a, b) => b.area - a.area);
                     setActiveLink(visibleSections[0].id);
                 } else {
-                    // If no section is directly visible, find the closest one
                     let closestSection = null;
                     let minDistance = Infinity;
                     
@@ -312,13 +303,11 @@
                     if (closestSection) {
                         setActiveLink(closestSection);
                     } else {
-                        // Fallback to top if somehow nothing is found
                         setActiveLink('top');
                     }
                 }
             }
             
-            // Add scroll event listener with throttling for performance
             let scrollTimeout;
             window.addEventListener('scroll', function() {
                 if (!scrollTimeout) {
@@ -329,11 +318,9 @@
                 }
             });
             
-            // Run once on page load and after a short delay to ensure correct highlighting
             onScroll();
             setTimeout(onScroll, 200);
             
-            // Smooth scrolling for anchor links
             const anchorLinks = document.querySelectorAll('a[href^="#"]');
             
             anchorLinks.forEach(link => {
@@ -354,10 +341,8 @@
                     const targetElement = document.getElementById(targetId);
                     
                     if (targetElement) {
-                        // Default offset for most sections
                         let offsetY = 80;
                         
-                        // Special case for "tentang-kami" section
                         if (targetId === 'tentang-kami') {
                             offsetY = 120;
                         }
