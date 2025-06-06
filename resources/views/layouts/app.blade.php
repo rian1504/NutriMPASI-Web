@@ -76,11 +76,11 @@
                     <span class="text-2xl font-extrabold ml-2"><span class="text-[#5966B1]">Nutri</span><span class="text-[#F59E0B]">MPASI</span></span>
                 </a>
                 <div class="hidden md:flex space-x-8">
-                    <a href="#top" class="text-[#F59E0B] text-lg font-medium">Beranda</a>
-                    <a href="#produk" class="text-gray-700 hover:text-[#F59E0B] text-lg font-medium">Produk</a>
-                    <a href="#fitur" class="text-gray-700 hover:text-[#F59E0B] text-lg font-medium">Fitur</a>
-                    <a href="#tentang-kami" class="text-gray-700 hover:text-[#F59E0B] text-lg font-medium">Tentang Kami</a>
-                    <a href="#kontak" class="text-gray-700 hover:text-[#F59E0B] text-lg font-medium">Kontak</a>
+                    <a href="#top" class="nav-link text-gray-700 hover:text-[#F59E0B] text-lg font-medium" data-section="top">Beranda</a>
+                    <a href="#produk" class="nav-link text-gray-700 hover:text-[#F59E0B] text-lg font-medium" data-section="produk">Produk</a>
+                    <a href="#fitur" class="nav-link text-gray-700 hover:text-[#F59E0B] text-lg font-medium" data-section="fitur">Fitur</a>
+                    <a href="#tentang-kami" class="nav-link text-gray-700 hover:text-[#F59E0B] text-lg font-medium" data-section="tentang-kami">Tentang Kami</a>
+                    <a href="#kontak" class="nav-link text-gray-700 hover:text-[#F59E0B] text-lg font-medium" data-section="kontak">Kontak</a>
                 </div>
                 <button id="mobile-menu-button" class="md:hidden focus:outline-none">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -92,11 +92,11 @@
             <!-- Mobile Menu (Hidden by default) -->
             <div id="mobile-menu" class="md:hidden bg-white absolute w-full left-0 top-full z-20 shadow-lg hidden">
                 <div class="py-2 px-4 space-y-3">
-                    <a href="#top" class="block py-2 px-4 text-[#F59E0B] font-medium border-l-4 border-[#F59E0B]">Beranda</a>
-                    <a href="#produk" class="block py-2 px-4 text-gray-700 hover:text-[#F59E0B] hover:bg-gray-50 font-medium hover:border-l-4 hover:border-[#F59E0B]">Produk</a>
-                    <a href="#fitur" class="block py-2 px-4 text-gray-700 hover:text-[#F59E0B] hover:bg-gray-50 font-medium hover:border-l-4 hover:border-[#F59E0B]">Fitur</a>
-                    <a href="#tentang-kami" class="block py-2 px-4 text-gray-700 hover:text-[#F59E0B] hover:bg-gray-50 font-medium hover:border-l-4 hover:border-[#F59E0B]">Tentang Kami</a>
-                    <a href="#kontak" class="block py-2 px-4 text-gray-700 hover:text-[#F59E0B] hover:bg-gray-50 font-medium hover:border-l-4 hover:border-[#F59E0B]">Kontak</a>
+                    <a href="#top" class="mobile-nav-link block py-2 px-4 text-gray-700 hover:text-[#F59E0B] hover:bg-gray-50 font-medium hover:border-l-4 hover:border-[#F59E0B]" data-section="top">Beranda</a>
+                    <a href="#produk" class="mobile-nav-link block py-2 px-4 text-gray-700 hover:text-[#F59E0B] hover:bg-gray-50 font-medium hover:border-l-4 hover:border-[#F59E0B]" data-section="produk">Produk</a>
+                    <a href="#fitur" class="mobile-nav-link block py-2 px-4 text-gray-700 hover:text-[#F59E0B] hover:bg-gray-50 font-medium hover:border-l-4 hover:border-[#F59E0B]" data-section="fitur">Fitur</a>
+                    <a href="#tentang-kami" class="mobile-nav-link block py-2 px-4 text-gray-700 hover:text-[#F59E0B] hover:bg-gray-50 font-medium hover:border-l-4 hover:border-[#F59E0B]" data-section="tentang-kami">Tentang Kami</a>
+                    <a href="#kontak" class="mobile-nav-link block py-2 px-4 text-gray-700 hover:text-[#F59E0B] hover:bg-gray-50 font-medium hover:border-l-4 hover:border-[#F59E0B]" data-section="kontak">Kontak</a>
                 </div>
             </div>
         </nav>
@@ -171,7 +171,7 @@
         </footer>
     </div>
     
-    <!-- Mobile menu toggle script -->
+    <!-- Mobile menu toggle script and scrollspy -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Mobile menu functionality
@@ -205,6 +205,131 @@
                 }
             });
 
+            // Scrollspy functionality
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+            
+            // Set Beranda as active by default
+            setActiveLink('top');
+            
+            function setActiveLink(sectionId) {
+                // Desktop nav links
+                navLinks.forEach(link => {
+                    if (link.dataset.section === sectionId) {
+                        link.classList.add('text-[#F59E0B]');
+                        link.classList.remove('text-gray-700');
+                    } else {
+                        link.classList.remove('text-[#F59E0B]');
+                        link.classList.add('text-gray-700');
+                    }
+                });
+                
+                // Mobile nav links
+                mobileNavLinks.forEach(link => {
+                    if (link.dataset.section === sectionId) {
+                        link.classList.add('text-[#F59E0B]', 'border-l-4', 'border-[#F59E0B]');
+                        link.classList.remove('hover:border-l-4');
+                    } else {
+                        link.classList.remove('text-[#F59E0B]', 'border-l-4', 'border-[#F59E0B]');
+                        link.classList.add('hover:border-l-4');
+                    }
+                });
+            }
+            
+            function onScroll() {
+                const scrollPos = window.pageYOffset;
+                const windowHeight = window.innerHeight;
+                const documentHeight = Math.max(
+                    document.body.scrollHeight,
+                    document.body.offsetHeight,
+                    document.documentElement.clientHeight,
+                    document.documentElement.scrollHeight,
+                    document.documentElement.offsetHeight
+                );
+                
+                // Special case for top of page - always highlight Beranda
+                if (scrollPos < 200) {
+                    setActiveLink('top');
+                    return;
+                }
+                
+                // Special case for bottom of page (Kontak section)
+                if (scrollPos + windowHeight >= documentHeight - 50) {
+                    setActiveLink('kontak');
+                    return;
+                }
+                
+                // Track which section is currently visible
+                let visibleSections = [];
+                
+                // Check each section's visibility
+                sections.forEach(section => {
+                    const sectionId = section.getAttribute('id');
+                    const rect = section.getBoundingClientRect();
+                    const sectionTop = rect.top + scrollPos;
+                    const sectionBottom = rect.bottom + scrollPos;
+                    const sectionHeight = rect.height;
+                    
+                    // A section is considered "visible" if:
+                    const viewportMid = scrollPos + windowHeight/3;
+                    const largeSection = sectionHeight > windowHeight * 0.7;
+                    
+                    if ((sectionTop <= viewportMid && sectionBottom >= viewportMid) || 
+                        (largeSection && scrollPos >= sectionTop - 100 && scrollPos <= sectionBottom - 100)) {
+                        visibleSections.push({
+                            id: sectionId,
+                            area: Math.min(sectionBottom, scrollPos + windowHeight) - 
+                                Math.max(sectionTop, scrollPos),
+                            top: sectionTop
+                        });
+                    }
+                });
+                
+                // If we have visible sections, highlight the one with the most visible area or the one at the top
+                if (visibleSections.length > 0) {
+                    // Sort by visible area (largest first)
+                    visibleSections.sort((a, b) => b.area - a.area);
+                    setActiveLink(visibleSections[0].id);
+                } else {
+                    // If no section is directly visible, find the closest one
+                    let closestSection = null;
+                    let minDistance = Infinity;
+                    
+                    sections.forEach(section => {
+                        const rect = section.getBoundingClientRect();
+                        const distance = Math.abs(rect.top);
+                        
+                        if (distance < minDistance) {
+                            minDistance = distance;
+                            closestSection = section.getAttribute('id');
+                        }
+                    });
+                    
+                    if (closestSection) {
+                        setActiveLink(closestSection);
+                    } else {
+                        // Fallback to top if somehow nothing is found
+                        setActiveLink('top');
+                    }
+                }
+            }
+            
+            // Add scroll event listener with throttling for performance
+            let scrollTimeout;
+            window.addEventListener('scroll', function() {
+                if (!scrollTimeout) {
+                    scrollTimeout = setTimeout(function() {
+                        onScroll();
+                        scrollTimeout = null;
+                    }, 100);
+                }
+            });
+            
+            // Run once on page load and after a short delay to ensure correct highlighting
+            onScroll();
+            setTimeout(onScroll, 200);
+            
             // Smooth scrolling for anchor links
             const anchorLinks = document.querySelectorAll('a[href^="#"]');
             
