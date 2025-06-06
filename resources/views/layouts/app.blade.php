@@ -68,15 +68,15 @@
 </head>
 <body class="antialiased">
     <div id="app" class="overflow-hidden">
-        <!-- Navbar -->
-        <nav class="bg-white shadow-navbar py-4 relative">
+        <!-- Navbar - Fixed position -->
+        <nav class="bg-white shadow-navbar py-4 fixed top-0 left-0 right-0 w-full z-50">
             <div class="container mx-auto px-4 flex justify-between items-center">
                 <a href="#" class="flex items-center">
                     <img src="{{ asset('image/logo/navbar_logo.png') }}" alt="NutriMPASI Logo" class="h-10">
                     <span class="text-2xl font-extrabold ml-2"><span class="text-[#5966B1]">Nutri</span><span class="text-[#F59E0B]">MPASI</span></span>
                 </a>
                 <div class="hidden md:flex space-x-8">
-                    <a href="/" class="text-[#F59E0B] text-lg font-medium">Beranda</a>
+                    <a href="#top" class="text-[#F59E0B] text-lg font-medium">Beranda</a>
                     <a href="#produk" class="text-gray-700 hover:text-[#F59E0B] text-lg font-medium">Produk</a>
                     <a href="#fitur" class="text-gray-700 hover:text-[#F59E0B] text-lg font-medium">Fitur</a>
                     <a href="#tentang-kami" class="text-gray-700 hover:text-[#F59E0B] text-lg font-medium">Tentang Kami</a>
@@ -92,7 +92,7 @@
             <!-- Mobile Menu (Hidden by default) -->
             <div id="mobile-menu" class="md:hidden bg-white absolute w-full left-0 top-full z-20 shadow-lg hidden">
                 <div class="py-2 px-4 space-y-3">
-                    <a href="/" class="block py-2 px-4 text-[#F59E0B] font-medium border-l-4 border-[#F59E0B]">Beranda</a>
+                    <a href="#top" class="block py-2 px-4 text-[#F59E0B] font-medium border-l-4 border-[#F59E0B]">Beranda</a>
                     <a href="#produk" class="block py-2 px-4 text-gray-700 hover:text-[#F59E0B] hover:bg-gray-50 font-medium hover:border-l-4 hover:border-[#F59E0B]">Produk</a>
                     <a href="#fitur" class="block py-2 px-4 text-gray-700 hover:text-[#F59E0B] hover:bg-gray-50 font-medium hover:border-l-4 hover:border-[#F59E0B]">Fitur</a>
                     <a href="#tentang-kami" class="block py-2 px-4 text-gray-700 hover:text-[#F59E0B] hover:bg-gray-50 font-medium hover:border-l-4 hover:border-[#F59E0B]">Tentang Kami</a>
@@ -100,6 +100,8 @@
                 </div>
             </div>
         </nav>
+
+        <div class="h-[72px]"></div>
 
         <!-- Main Content -->
         @yield('content')
@@ -213,11 +215,27 @@
                     const targetId = this.getAttribute('href').substring(1);
                     if (targetId === '') return;
                     
+                    if (targetId === 'top') {
+                        window.scrollTo({
+                            top: 0,
+                            behavior: 'smooth'
+                        });
+                        return;
+                    }
+                    
                     const targetElement = document.getElementById(targetId);
                     
                     if (targetElement) {
+                        // Default offset for most sections
+                        let offsetY = 80;
+                        
+                        // Special case for "tentang-kami" section
+                        if (targetId === 'tentang-kami') {
+                            offsetY = 120;
+                        }
+                        
                         window.scrollTo({
-                            top: targetElement.offsetTop - 80,
+                            top: targetElement.offsetTop - offsetY,
                             behavior: 'smooth'
                         });
                     }
