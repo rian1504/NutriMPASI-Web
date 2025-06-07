@@ -9,8 +9,11 @@
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
     
-    <!-- Fonts -->
+    <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- AOS CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -33,7 +36,7 @@
         }
     </script>
     
-    <!-- Custom Styles -->
+    <!-- Gaya Kustom -->
     <style>
         html, body {
             overflow-x: hidden;
@@ -53,7 +56,7 @@
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
         
-        /* Simple fade-in animation for mobile menu */
+        /* Animasi fade-in untuk menu mobile */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -69,18 +72,18 @@
 <body class="antialiased">
     <div id="app" class="overflow-hidden">
         <!-- Navbar -->
-        <nav class="bg-white shadow-navbar py-4 relative">
+        <nav class="bg-white shadow-navbar py-4 fixed top-0 left-0 right-0 w-full z-50">
             <div class="container mx-auto px-4 flex justify-between items-center">
                 <a href="#" class="flex items-center">
                     <img src="{{ asset('image/logo/navbar_logo.png') }}" alt="NutriMPASI Logo" class="h-10">
                     <span class="text-2xl font-extrabold ml-2"><span class="text-[#5966B1]">Nutri</span><span class="text-[#F59E0B]">MPASI</span></span>
                 </a>
                 <div class="hidden md:flex space-x-8">
-                    <a href="/" class="text-[#F59E0B] text-lg font-medium">Beranda</a>
-                    <a href="#produk" class="text-gray-700 hover:text-[#F59E0B] text-lg font-medium">Produk</a>
-                    <a href="#fitur" class="text-gray-700 hover:text-[#F59E0B] text-lg font-medium">Fitur</a>
-                    <a href="#tentang-kami" class="text-gray-700 hover:text-[#F59E0B] text-lg font-medium">Tentang Kami</a>
-                    <a href="#kontak" class="text-gray-700 hover:text-[#F59E0B] text-lg font-medium">Kontak</a>
+                    <a href="#top" class="nav-link text-gray-700 hover:text-[#F59E0B] text-lg font-medium" data-section="top">Beranda</a>
+                    <a href="#produk" class="nav-link text-gray-700 hover:text-[#F59E0B] text-lg font-medium" data-section="produk">Produk</a>
+                    <a href="#fitur" class="nav-link text-gray-700 hover:text-[#F59E0B] text-lg font-medium" data-section="fitur">Fitur</a>
+                    <a href="#tentang-kami" class="nav-link text-gray-700 hover:text-[#F59E0B] text-lg font-medium" data-section="tentang-kami">Tentang Kami</a>
+                    <a href="#kontak" class="nav-link text-gray-700 hover:text-[#F59E0B] text-lg font-medium" data-section="kontak">Kontak</a>
                 </div>
                 <button id="mobile-menu-button" class="md:hidden focus:outline-none">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -89,26 +92,28 @@
                 </button>
             </div>
 
-            <!-- Mobile Menu (Hidden by default) -->
+            <!-- Menu Mobile -->
             <div id="mobile-menu" class="md:hidden bg-white absolute w-full left-0 top-full z-20 shadow-lg hidden">
                 <div class="py-2 px-4 space-y-3">
-                    <a href="/" class="block py-2 px-4 text-[#F59E0B] font-medium border-l-4 border-[#F59E0B]">Beranda</a>
-                    <a href="#produk" class="block py-2 px-4 text-gray-700 hover:text-[#F59E0B] hover:bg-gray-50 font-medium hover:border-l-4 hover:border-[#F59E0B]">Produk</a>
-                    <a href="#fitur" class="block py-2 px-4 text-gray-700 hover:text-[#F59E0B] hover:bg-gray-50 font-medium hover:border-l-4 hover:border-[#F59E0B]">Fitur</a>
-                    <a href="#tentang-kami" class="block py-2 px-4 text-gray-700 hover:text-[#F59E0B] hover:bg-gray-50 font-medium hover:border-l-4 hover:border-[#F59E0B]">Tentang Kami</a>
-                    <a href="#kontak" class="block py-2 px-4 text-gray-700 hover:text-[#F59E0B] hover:bg-gray-50 font-medium hover:border-l-4 hover:border-[#F59E0B]">Kontak</a>
+                    <a href="#top" class="mobile-nav-link block py-2 px-4 text-gray-700 hover:text-[#F59E0B] hover:bg-gray-50 font-medium hover:border-l-4 hover:border-[#F59E0B]" data-section="top">Beranda</a>
+                    <a href="#produk" class="mobile-nav-link block py-2 px-4 text-gray-700 hover:text-[#F59E0B] hover:bg-gray-50 font-medium hover:border-l-4 hover:border-[#F59E0B]" data-section="produk">Produk</a>
+                    <a href="#fitur" class="mobile-nav-link block py-2 px-4 text-gray-700 hover:text-[#F59E0B] hover:bg-gray-50 font-medium hover:border-l-4 hover:border-[#F59E0B]" data-section="fitur">Fitur</a>
+                    <a href="#tentang-kami" class="mobile-nav-link block py-2 px-4 text-gray-700 hover:text-[#F59E0B] hover:bg-gray-50 font-medium hover:border-l-4 hover:border-[#F59E0B]" data-section="tentang-kami">Tentang Kami</a>
+                    <a href="#kontak" class="mobile-nav-link block py-2 px-4 text-gray-700 hover:text-[#F59E0B] hover:bg-gray-50 font-medium hover:border-l-4 hover:border-[#F59E0B]" data-section="kontak">Kontak</a>
                 </div>
             </div>
         </nav>
 
-        <!-- Main Content -->
+        <div class="h-[72px]"></div>
+
+        <!-- Konten Utama -->
         @yield('content')
         
         <!-- Footer -->
         <footer class="bg-[#F59E0B] py-12 text-white">
             <div class="container mx-auto px-4">
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                    <!-- Column 1: Logo & Description -->
+                    <!-- Kolom 1: Logo & Deskripsi -->
                     <div class="col-span-1">
                         <div class="flex items-center mb-4">
                             <div class="bg-white p-2 rounded-full mr-3">
@@ -121,7 +126,7 @@
                         </p>
                     </div>
 
-                    <!-- Column 2: Tautan Proyek -->
+                    <!-- Kolom 2: Tautan Proyek -->
                     <div class="col-span-1">
                         <h3 class="text-xl font-bold mb-4">Tautan Proyek</h3>
                         <ul class="space-y-2">
@@ -131,7 +136,7 @@
                         </ul>
                     </div>
 
-                    <!-- Column 3: Halaman -->
+                    <!-- Kolom 3: Halaman -->
                     <div class="col-span-1">
                         <h3 class="text-xl font-bold mb-4">Halaman</h3>
                         <ul class="space-y-2">
@@ -142,7 +147,7 @@
                         </ul>
                     </div>
 
-                    <!-- Column 4: Kontak -->
+                    <!-- Kolom 4: Kontak -->
                     <div class="col-span-1">
                         <h3 class="text-xl font-bold mb-4">Kontak</h3>
                         <p class="mb-4">Batam, Kepulauan Riau</p>
@@ -161,7 +166,7 @@
                     </div>
                 </div>
 
-                <!-- Copyright -->
+                <!-- Hak Cipta -->
                 <div class="mt-12 pt-8 border-t border-white/20 text-center">
                     <p>© 2025 NutriMPASI. All rights reserved.</p>
                 </div>
@@ -169,31 +174,30 @@
         </footer>
     </div>
     
-    <!-- Mobile menu toggle script -->
+    <!-- Skrip toggle menu mobile dan scrollspy -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Mobile menu functionality
+            // Fungsi menu mobile
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
 
             mobileMenuButton.addEventListener('click', function() {
                 if (mobileMenu.classList.contains('hidden')) {
                     mobileMenu.classList.remove('hidden');
-                    // Add animation
                     mobileMenu.classList.add('animate-fadeIn');
                 } else {
                     mobileMenu.classList.add('hidden');
                 }
             });
 
-            // Close menu when clicking on a mobile menu item
+            // Tutup menu saat klik pada item menu mobile
             document.querySelectorAll('#mobile-menu a').forEach(link => {
                 link.addEventListener('click', function() {
                     mobileMenu.classList.add('hidden');
                 });
             });
 
-            // Close mobile menu when clicking outside
+            // Tutup menu mobile saat klik diluar menu
             document.addEventListener('click', function(event) {
                 const isClickInsideMenu = mobileMenu.contains(event.target);
                 const isClickOnButton = mobileMenuButton.contains(event.target);
@@ -203,7 +207,120 @@
                 }
             });
 
-            // Smooth scrolling for anchor links
+            // Fungsi scrollspy
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+            
+            // Atur Beranda sebagai aktif secara default
+            setActiveLink('top');
+            
+            function setActiveLink(sectionId) {
+                // Link navigasi desktop
+                navLinks.forEach(link => {
+                    if (link.dataset.section === sectionId) {
+                        link.classList.add('text-[#F59E0B]');
+                        link.classList.remove('text-gray-700');
+                    } else {
+                        link.classList.remove('text-[#F59E0B]');
+                        link.classList.add('text-gray-700');
+                    }
+                });
+                
+                // Link navigasi mobile
+                mobileNavLinks.forEach(link => {
+                    if (link.dataset.section === sectionId) {
+                        link.classList.add('text-[#F59E0B]', 'border-l-4', 'border-[#F59E0B]');
+                        link.classList.remove('hover:border-l-4');
+                    } else {
+                        link.classList.remove('text-[#F59E0B]', 'border-l-4', 'border-[#F59E0B]');
+                        link.classList.add('hover:border-l-4');
+                    }
+                });
+            }
+            
+            function onScroll() {
+                const scrollPos = window.pageYOffset;
+                const windowHeight = window.innerHeight;
+                const documentHeight = Math.max(
+                    document.body.scrollHeight,
+                    document.body.offsetHeight,
+                    document.documentElement.clientHeight,
+                    document.documentElement.scrollHeight,
+                    document.documentElement.offsetHeight
+                );
+                
+                if (scrollPos < 200) {
+                    setActiveLink('top');
+                    return;
+                }
+                
+                if (scrollPos + windowHeight >= documentHeight - 50) {
+                    setActiveLink('kontak');
+                    return;
+                }
+                
+                let visibleSections = [];
+                
+                sections.forEach(section => {
+                    const sectionId = section.getAttribute('id');
+                    const rect = section.getBoundingClientRect();
+                    const sectionTop = rect.top + scrollPos;
+                    const sectionBottom = rect.bottom + scrollPos;
+                    const sectionHeight = rect.height;
+                    
+                    const viewportMid = scrollPos + windowHeight/3;
+                    const largeSection = sectionHeight > windowHeight * 0.7;
+                    
+                    if ((sectionTop <= viewportMid && sectionBottom >= viewportMid) || 
+                        (largeSection && scrollPos >= sectionTop - 100 && scrollPos <= sectionBottom - 100)) {
+                        visibleSections.push({
+                            id: sectionId,
+                            area: Math.min(sectionBottom, scrollPos + windowHeight) - 
+                                Math.max(sectionTop, scrollPos),
+                            top: sectionTop
+                        });
+                    }
+                });
+                
+                if (visibleSections.length > 0) {
+                    visibleSections.sort((a, b) => b.area - a.area);
+                    setActiveLink(visibleSections[0].id);
+                } else {
+                    let closestSection = null;
+                    let minDistance = Infinity;
+                    
+                    sections.forEach(section => {
+                        const rect = section.getBoundingClientRect();
+                        const distance = Math.abs(rect.top);
+                        
+                        if (distance < minDistance) {
+                            minDistance = distance;
+                            closestSection = section.getAttribute('id');
+                        }
+                    });
+                    
+                    if (closestSection) {
+                        setActiveLink(closestSection);
+                    } else {
+                        setActiveLink('top');
+                    }
+                }
+            }
+            
+            let scrollTimeout;
+            window.addEventListener('scroll', function() {
+                if (!scrollTimeout) {
+                    scrollTimeout = setTimeout(function() {
+                        onScroll();
+                        scrollTimeout = null;
+                    }, 100);
+                }
+            });
+            
+            onScroll();
+            setTimeout(onScroll, 200);
+            
             const anchorLinks = document.querySelectorAll('a[href^="#"]');
             
             anchorLinks.forEach(link => {
@@ -213,16 +330,41 @@
                     const targetId = this.getAttribute('href').substring(1);
                     if (targetId === '') return;
                     
+                    if (targetId === 'top') {
+                        window.scrollTo({
+                            top: 0,
+                            behavior: 'smooth'
+                        });
+                        return;
+                    }
+                    
                     const targetElement = document.getElementById(targetId);
                     
                     if (targetElement) {
+                        let offsetY = 80;
+                        
+                        if (targetId === 'tentang-kami') {
+                            offsetY = 120;
+                        }
+                        
                         window.scrollTo({
-                            top: targetElement.offsetTop - 80,
+                            top: targetElement.offsetTop - offsetY,
                             behavior: 'smooth'
                         });
                     }
                 });
             });
+        });
+    </script>
+    
+    <!-- AOS JS -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: false,
+            mirror: true,
         });
     </script>
     
