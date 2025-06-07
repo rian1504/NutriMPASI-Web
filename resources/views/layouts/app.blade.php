@@ -144,6 +144,7 @@
                             <li><a href="#produk" class="hover:underline">Produk</a></li>
                             <li><a href="#fitur" class="hover:underline">Fitur</a></li>
                             <li><a href="#tentang-kami" class="hover:underline">Tentang Kami</a></li>
+                            <li><a href="#kontak" class="hover:underline">Kontak</a></li>
                         </ul>
                     </div>
 
