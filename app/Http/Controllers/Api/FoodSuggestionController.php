@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Models\Food;
+use App\Models\Report;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -163,6 +164,11 @@ class FoodSuggestionController extends Controller
             // delete image
             Storage::delete($food_suggestion->image);
         }
+
+        // Hapus report terkait food ini
+        Report::where('category', 'food')
+            ->where('refers_id', $food_suggestion->id)
+            ->delete();
 
         // delete data
         $food_suggestion->delete();

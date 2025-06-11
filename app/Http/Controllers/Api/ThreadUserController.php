@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Models\Report;
 use App\Models\Thread;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class ThreadUserController extends Controller
@@ -73,6 +74,11 @@ class ThreadUserController extends Controller
     // method untuk menghapus data thread
     public function destroy(Thread $thread_user)
     {
+        // Hapus report terkait thread ini
+        Report::where('category', 'thread')
+            ->where('refers_id', $thread_user->id)
+            ->delete();
+
         // Hapus data thread
         $thread_user->delete();
 

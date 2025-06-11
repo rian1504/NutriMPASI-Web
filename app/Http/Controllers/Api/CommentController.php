@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use App\Models\Notification;
+use App\Models\Report;
 use App\Models\Thread;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -78,9 +79,9 @@ class CommentController extends Controller
     // method untuk menghapus data comment
     public function destroy(Comment $comment)
     {
-        // Hapus notifikasi terkait komentar ini
-        Notification::where('category', 'comment')
-            ->where('comment_id', $comment->id)
+        // Hapus report terkait komentar ini
+        Report::where('category', 'comment')
+            ->where('refers_id', $comment->id)
             ->delete();
 
         // Hapus data comment
