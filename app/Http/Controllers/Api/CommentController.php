@@ -17,7 +17,7 @@ class CommentController extends Controller
         // validasi request
         $request->validate([
             'thread_id' => ['required', 'integer'],
-            'content' => ['required', 'string', 'min:4'],
+            'content' => ['required', 'string'],
         ]);
 
         // Mengambil id user
@@ -62,7 +62,7 @@ class CommentController extends Controller
     {
         // validasi request
         $validatedData = $request->validate([
-            'content' => ['required', 'string', 'min:4'],
+            'content' => ['required', 'string'],
         ]);
 
         // Update data comment
