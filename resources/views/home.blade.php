@@ -2,7 +2,7 @@
 
 @section('content')
     <!-- Bagian Hero -->
-    <section class="relative overflow-hidden py-16 bg-gradient-to-b from-amber-500 via-amber-500 to-white">
+    <section class="relative overflow-hidden py-8 bg-gradient-to-br from-[#F59E0B] from-36% via-[#F59E0B] via-20% to-white">
         <div class="container mx-auto px-4 relative z-10">
             <div class="flex flex-wrap items-center">
                 <div class="w-full md:w-1/2 mb-10 md:mb-0" data-aos="fade-right" data-aos-delay="100">
@@ -20,10 +20,10 @@
                     </a>
                 </div>
                 <div class="w-full md:w-1/2 flex justify-center relative" data-aos="fade-up" data-aos-delay="300">
-                    <div class="absolute w-[80%] sm:w-[500px] lg:w-[600px] h-[500px] sm:h-[600px] rounded-full bg-white -bottom-80 left-1/2 -translate-x-1/2 z-0 max-w-full"></div>
-                    <div class="absolute w-[85%] sm:w-[550px] lg:w-[650px] h-[550px] sm:h-[650px] rounded-full bg-white/60 -bottom-80 left-1/2 -translate-x-1/2 z-0 max-w-full"></div>
-                    <div class="absolute w-[90%] sm:w-[600px] lg:w-[700px] h-[600px] sm:h-[700px] rounded-full bg-white/30 -bottom-80 left-1/2 -translate-x-1/2 z-0 max-w-full"></div>
-                    <img src="{{ asset('image/mockups/splashscreen_mockup.png') }}" alt="NutriMPASI App" class="max-h-[500px] relative z-10">
+                    <div class="absolute w-[80%] sm:w-[600px] lg:w-[600px] h-[500px] sm:h-[600px] rounded-full bg-white -bottom-80 left-1/2 -translate-x-1/2 z-0 max-w-full"></div>
+                    <div class="absolute w-[85%] sm:w-[650px] lg:w-[650px] h-[550px] sm:h-[650px] rounded-full bg-white/60 -bottom-80 left-1/2 -translate-x-1/2 z-0 max-w-full"></div>
+                    <div class="absolute w-[90%] sm:w-[700px] lg:w-[700px] h-[600px] sm:h-[700px] rounded-full bg-white/30 -bottom-80 left-1/2 -translate-x-1/2 z-0 max-w-full"></div>
+                    <img src="{{ asset('image/mockups/splashscreen_mockup.png') }}" alt="NutriMPASI App" class="max-h-[700px] relative z-10">
                 </div>
             </div>
         </div>
@@ -138,7 +138,7 @@
                         <!-- Fitur 1 -->
                         <div class="flex mb-8" data-aos="fade-up" data-aos-delay="300">
                             <div class="bg-[#F59E0B] rounded-lg p-3 mr-4 h-12 w-12 flex items-center justify-center flex-shrink-0">
-                                <img src="{{ asset('image/icons/user_icon.png') }}" alt="UI Ramah" class="w-6 h-6">
+                                <img src="{{ asset('image/icons/user_icon.png') }}" alt="UI Ramah" class="w-4 h-6">
                             </div>
                             <div>
                                 <h3 class="text-xl font-semibold text-gray-800 mb-1">Tampilan Ramah Orang Tua</h3>
