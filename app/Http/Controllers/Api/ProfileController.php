@@ -60,7 +60,7 @@ class ProfileController extends Controller
 
         // Mengembalikan response API
         return response()->json([
-            'data' => $user,
+            'user' => $user,
             'message' => 'Berhasil mengubah profil',
         ]);
     }
