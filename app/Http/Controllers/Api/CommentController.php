@@ -69,6 +69,13 @@ class CommentController extends Controller
         // Update data comment
         $comment->update($validatedData);
 
+        // get user data
+        $comment->load([
+            'user' => function ($query) {
+                $query->select('id', 'name', 'avatar');
+            }
+        ]);
+
         // return response JSON
         return response()->json([
             'data' => $comment,
