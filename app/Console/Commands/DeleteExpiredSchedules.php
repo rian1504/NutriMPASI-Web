@@ -2,8 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Schedule;
 use Carbon\Carbon;
+use App\Models\Schedule;
+use App\Models\Notification;
 use Illuminate\Console\Command;
 
 class DeleteExpiredSchedules extends Command
@@ -47,6 +48,9 @@ class DeleteExpiredSchedules extends Command
         Schedule::where('date', '<', Carbon::today())
             ->chunkById(200, function ($schedules) use ($bar) {
                 foreach ($schedules as $schedule) {
+                    // Hapus notifikasi terkait sebelum menghapus schedule
+                    $this->deleteRelatedNotifications($schedule);
+
                     $schedule->delete();
                     $bar->advance();
                 }
@@ -55,5 +59,13 @@ class DeleteExpiredSchedules extends Command
         $bar->finish();
         $this->newLine();
         $this->info("Successfully deleted {$count} expired schedules.");
+    }
+
+    protected function deleteRelatedNotifications(Schedule $schedule)
+    {
+        Notification::where('category', 'schedule')
+            ->where('user_id', $schedule->user_id)
+            ->where('created_at', '<', Carbon::today())
+            ->delete();
     }
 }
