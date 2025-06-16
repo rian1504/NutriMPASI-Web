@@ -84,6 +84,11 @@ class CommentController extends Controller
             ->where('refers_id', $comment->id)
             ->delete();
 
+        // Hapus Notification terkait komentar ini
+        Notification::where('category', 'comment')
+            ->where('comment_id', $comment->id)
+            ->delete();
+
         // Hapus data comment
         $comment->delete();
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Report;
 use App\Models\Thread;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -77,6 +78,11 @@ class ThreadUserController extends Controller
         // Hapus report terkait thread ini
         Report::where('category', 'thread')
             ->where('refers_id', $thread_user->id)
+            ->delete();
+
+        // Hapus notification terkait thread ini
+        Notification::where('category', 'thread')
+            ->where('thread_id', $thread_user->id)
             ->delete();
 
         // Hapus data thread
