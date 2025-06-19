@@ -57,4 +57,22 @@ class Baby extends Model
 
         return '0-5'; // Di luar rentang yang ditentukan
     }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($baby) {
+            // Ambil dulu semua data yang diperlukan
+            $scheduleIds = $baby->baby_schedules()->pluck('schedule_id');
+
+            // Hapus relasi manual
+            $baby->baby_schedules()->delete();
+
+            // Proses penghapusan schedule yatim
+            Schedule::whereIn('id', $scheduleIds)
+                ->doesntHave('baby_schedules')
+                ->delete();
+        });
+    }
 }
