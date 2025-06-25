@@ -20,6 +20,7 @@ class AuthenticatedSessionController extends Controller
 
         $user = $request->user();
 
+        // comment this for load testing
         $user->tokens()->delete();
 
         // Membuat token
