@@ -23,6 +23,12 @@ class AuthenticatedSessionController extends Controller
         // comment this for load testing
         $user->tokens()->delete();
 
+        // Simpan FCM token jika ada
+        if ($request->has('fcm_token') && $request->fcm_token) {
+            $user->fcm_token = $request->fcm_token;
+            $user->save();
+        }
+
         // Membuat token
         $userToken = $user->createToken('user-token')->plainTextToken;
 
@@ -39,6 +45,15 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): JsonResponse
     {
+        // Dapatkan user sebelum logout
+        $user = $request->user();
+
+        // Hapus FCM token dari database
+        if ($user->fcm_token) {
+            $user->fcm_token = null;
+            $user->save();
+        }
+
         Auth::guard('web')->logout();
 
         // Menghapus token
