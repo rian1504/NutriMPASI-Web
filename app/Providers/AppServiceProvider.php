@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Models\Baby;
+use App\Models\Notification;
 use App\Observers\BabyObserver;
 use Illuminate\Support\Facades\Blade;
+use App\Observers\NotificationObserver;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Support\Facades\RateLimiter;
@@ -30,6 +32,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Baby::observe(BabyObserver::class);
+        Notification::observe(NotificationObserver::class);
 
         // for load testing
         // RateLimiter::for('api', function () {
