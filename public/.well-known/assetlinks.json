@@ -1,0 +1,12 @@
+[
+    {
+        "relation": ["delegate_permission/common:handle_all_urls"],
+        "target": {
+            "namespace": "android_app",
+            "package_name": "com.example.nutrimpasi",
+            "sha256_cert_fingerprints": [
+                "1C:BB:40:73:65:B3:59:04:25:28:6B:52:C6:D2:D7:C8:A0:41:A7:FF:0F:74:B8:4B:D5:44:BD:D8:27:35:01:CB"
+            ]
+        }
+    }
+]
