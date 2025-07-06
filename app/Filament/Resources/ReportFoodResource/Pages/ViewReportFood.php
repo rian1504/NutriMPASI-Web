@@ -61,7 +61,7 @@ class ViewReportFood extends ViewRecord
                 'content' =>
                 <<<EOD
                 Laporan Anda tentang makanan dengan nama "$food->name" telah diterima dan makanan telah dihapus.
-                Terima kasih sudah melaporkan😻😻
+                Terima kasih sudah melaporkan
                 EOD,
             ]);
         }
@@ -106,7 +106,7 @@ class ViewReportFood extends ViewRecord
                 'content' =>
                 <<<EOD
                 Laporan Anda tentang makanan dengan nama "$food->name" telah ditolak.
-                Terima kasih sudah melaporkan😻😻
+                Terima kasih sudah melaporkan
                 EOD,
             ]);
         }

@@ -63,7 +63,7 @@ class ViewReportComment extends ViewRecord
                 'content' =>
                 <<<EOD
                 Laporan Anda mengenai komentar pada thread dengan judul "$thread" telah diterima dan komentar telah dihapus.
-                Terima kasih sudah melaporkan😻😻
+                Terima kasih sudah melaporkan
                 EOD,
             ]);
         }
@@ -105,7 +105,7 @@ class ViewReportComment extends ViewRecord
                 'content' =>
                 <<<EOD
                 Laporan Anda mengenai komentar pada thread dengan judul "$thread" telah ditolak.
-                Terima kasih sudah melaporkan😻😻
+                Terima kasih sudah melaporkan
                 EOD,
             ]);
         }

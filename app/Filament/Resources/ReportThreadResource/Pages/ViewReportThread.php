@@ -59,7 +59,7 @@ class ViewReportThread extends ViewRecord
                 'content' =>
                 <<<EOD
                 Laporan Anda mengenai postingan dengan judul "$thread->title" telah diterima dan postingan telah dihapus.
-                Terima kasih sudah melaporkan😻😻
+                Terima kasih sudah melaporkan
                 EOD,
             ]);
         }
@@ -98,7 +98,7 @@ class ViewReportThread extends ViewRecord
                 'content' =>
                 <<<EOD
                 Laporan Anda mengenai postingan dengan judul "$thread->title" telah ditolak.
-                Terima kasih sudah melaporkan😻😻
+                Terima kasih sudah melaporkan
                 EOD,
             ]);
         }
