@@ -132,7 +132,7 @@
                         <ul class="space-y-2">
                             <li><a href="https://github.com/rian1504/NutriMPASI-Mobile" target="_blank" rel="noopener noreferrer" class="hover:underline">GitHub Mobile</a></li>
                             <li><a href="https://github.com/rian1504/NutriMPASI-Web" target="_blank" rel="noopener noreferrer" class="hover:underline">GitHub Web</a></li>
-                            <li><a href="#" target="_blank" rel="noopener noreferrer" class="hover:underline">Demo Video</a></li>
+                            <li><a href="https://youtu.be/99fju-8Rmbg" target="_blank" rel="noopener noreferrer" class="hover:underline">Demo Video</a></li>
                         </ul>
                     </div>
 

@@ -252,8 +252,8 @@
                     <!-- Player Video -->
                     <iframe 
                         class="absolute top-0 left-0 w-full h-full" 
-                        src="https://www.youtube.com/embed/Bgm0g5Gtyfk?si=94wQnmB2XTSBOjRT" 
-                        title="NutriMPASI Demo Video" 
+                        src="https://www.youtube.com/embed/99fju-8Rmbg" 
+                        title="NutriMPASI Demo Video"
                         frameborder="0" 
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                         allowfullscreen>
