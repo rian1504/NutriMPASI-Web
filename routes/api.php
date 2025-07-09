@@ -99,81 +99,81 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     });
 
     // TESTING
-    Route::prefix('testing')->group(function () {
-        // Food
-        Route::prefix('food')->group(function () {
-            Route::get('', [FoodController::class, 'index']);
-            Route::get('category', [FoodController::class, 'category']);
-            Route::post('filter', [FoodController::class, 'filter']);
-            Route::get('record', [FoodController::class, 'foodRecord']);
-            Route::get('{food}', [FoodController::class, 'show']);
-            Route::get('{food}/cook', [FoodController::class, 'showCookingGuide']);
-            Route::post('{food}/cook/complete', [FoodController::class, 'completeCooking']);
-        });
+    // Route::prefix('testing')->group(function () {
+    //     // Food
+    //     Route::prefix('food')->group(function () {
+    //         Route::get('', [FoodController::class, 'index']);
+    //         Route::get('category', [FoodController::class, 'category']);
+    //         Route::post('filter', [FoodController::class, 'filter']);
+    //         Route::get('record', [FoodController::class, 'foodRecord']);
+    //         Route::get('{food}', [FoodController::class, 'show']);
+    //         Route::get('{food}/cook', [FoodController::class, 'showCookingGuide']);
+    //         Route::post('{food}/cook/complete', [FoodController::class, 'completeCooking']);
+    //     });
 
-        // Favorite Food
-        Route::prefix('favorite')->group(function () {
-            Route::get('', [FavoriteController::class, 'index']);
-            Route::post('{food}', [FavoriteController::class, 'store']);
-        });
+    //     // Favorite Food
+    //     Route::prefix('favorite')->group(function () {
+    //         Route::get('', [FavoriteController::class, 'index']);
+    //         Route::post('{food}', [FavoriteController::class, 'store']);
+    //     });
 
-        // Schedule
-        Route::prefix('schedule')->group(function () {
-            Route::get('', [ScheduleController::class, 'index']);
-            Route::post('filter', [ScheduleController::class, 'filter']);
-            Route::post('{food}', [ScheduleController::class, 'store']);
-            Route::get('{schedule}/edit', [ScheduleController::class, 'edit']);
-            Route::post('{schedule}/update', [ScheduleController::class, 'update']);
-            Route::delete('{schedule}', [ScheduleController::class, 'destroy']);
-        });
+    //     // Schedule
+    //     Route::prefix('schedule')->group(function () {
+    //         Route::get('', [ScheduleController::class, 'index']);
+    //         Route::post('filter', [ScheduleController::class, 'filter']);
+    //         Route::post('{food}', [ScheduleController::class, 'store']);
+    //         Route::get('{schedule}/edit', [ScheduleController::class, 'edit']);
+    //         Route::post('{schedule}/update', [ScheduleController::class, 'update']);
+    //         Route::delete('{schedule}', [ScheduleController::class, 'destroy']);
+    //     });
 
-        // Nutritionist
-        Route::get('nutritionist', [NutritionistController::class, 'index']);
+    //     // Nutritionist
+    //     Route::get('nutritionist', [NutritionistController::class, 'index']);
 
-        // Food Suggestion
-        Route::resource('food-suggestion', FoodSuggestionController::class)->except(['create', 'edit', 'update']);
-        Route::post('food-suggestion/{food_suggestion}', [FoodSuggestionController::class, 'update'])->name('food_recommendation.update');
+    //     // Food Suggestion
+    //     Route::resource('food-suggestion', FoodSuggestionController::class)->except(['create', 'edit', 'update']);
+    //     Route::post('food-suggestion/{food_suggestion}', [FoodSuggestionController::class, 'update'])->name('food_recommendation.update');
 
-        // Baby
-        Route::resource('baby', BabyController::class)->except(['create', 'edit', 'update']);
-        Route::post('baby/{baby}', [BabyController::class, 'update'])->name('baby.update');
-        Route::get('baby/food-recommendation/{baby}', [BabyController::class, 'foodRecommendation'])->name('baby.food-recommendation');
+    //     // Baby
+    //     Route::resource('baby', BabyController::class)->except(['create', 'edit', 'update']);
+    //     Route::post('baby/{baby}', [BabyController::class, 'update'])->name('baby.update');
+    //     Route::get('baby/food-recommendation/{baby}', [BabyController::class, 'foodRecommendation'])->name('baby.food-recommendation');
 
-        // Thread User
-        Route::resource('thread-user', ThreadUserController::class)->except(['create', 'show', 'edit', 'update']);
-        Route::post('thread-user/{thread_user}', [ThreadUserController::class, 'update'])->name('thread.update');
+    //     // Thread User
+    //     Route::resource('thread-user', ThreadUserController::class)->except(['create', 'show', 'edit', 'update']);
+    //     Route::post('thread-user/{thread_user}', [ThreadUserController::class, 'update'])->name('thread.update');
 
-        // Thread
-        Route::prefix('thread')->group(function () {
-            Route::get('', [ThreadController::class, 'index']);
-            Route::get('{thread}', [ThreadController::class, 'show']);
-        });
+    //     // Thread
+    //     Route::prefix('thread')->group(function () {
+    //         Route::get('', [ThreadController::class, 'index']);
+    //         Route::get('{thread}', [ThreadController::class, 'show']);
+    //     });
 
-        // Like Thread
-        Route::prefix('like')->group(function () {
-            Route::get('', [LikeController::class, 'index']);
-            Route::post('{thread}', [LikeController::class, 'store']);
-        });
+    //     // Like Thread
+    //     Route::prefix('like')->group(function () {
+    //         Route::get('', [LikeController::class, 'index']);
+    //         Route::post('{thread}', [LikeController::class, 'store']);
+    //     });
 
-        // Comment
-        Route::resource('comment', CommentController::class)->except(['index', 'create', 'show', 'edit', 'update']);
-        Route::post('comment/{comment}', [CommentController::class, 'update'])->name('comment.update');
+    //     // Comment
+    //     Route::resource('comment', CommentController::class)->except(['index', 'create', 'show', 'edit', 'update']);
+    //     Route::post('comment/{comment}', [CommentController::class, 'update'])->name('comment.update');
 
-        // Notification
-        Route::prefix('notification')->group(function () {
-            Route::get('', [NotificationController::class, 'index']);
-            Route::post('', [NotificationController::class, 'readAll']);
-            Route::post('{notification}', [NotificationController::class, 'read']);
-        });
+    //     // Notification
+    //     Route::prefix('notification')->group(function () {
+    //         Route::get('', [NotificationController::class, 'index']);
+    //         Route::post('', [NotificationController::class, 'readAll']);
+    //         Route::post('{notification}', [NotificationController::class, 'read']);
+    //     });
 
-        // Profil
-        Route::prefix('profile')->group(function () {
-            Route::get('', [ProfileController::class, 'index']);
-            Route::post('{user}', [ProfileController::class, 'updateProfile']);
-            Route::post('{user}/password', [ProfileController::class, 'updatePassword']);
-        });
+    //     // Profil
+    //     Route::prefix('profile')->group(function () {
+    //         Route::get('', [ProfileController::class, 'index']);
+    //         Route::post('{user}', [ProfileController::class, 'updateProfile']);
+    //         Route::post('{user}/password', [ProfileController::class, 'updatePassword']);
+    //     });
 
-        // Report
-        Route::post('report/{category}', [ReportController::class, 'store']);
-    });
+    //     // Report
+    //     Route::post('report/{category}', [ReportController::class, 'store']);
+    // });
 });
