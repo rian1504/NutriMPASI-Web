@@ -147,9 +147,9 @@ class FoodController extends Controller
         ]);
 
         // Konversi string ke array
-        $filteredFood['recipe'] = explode(',', $food->recipe);
-        $filteredFood['fruit'] = explode(',', $food->fruit);
-        $filteredFood['step'] = explode(',', $food->step);
+        $filteredFood['recipe'] = explode(';', $food->recipe);
+        $filteredFood['fruit'] = explode(';', $food->fruit);
+        $filteredFood['step'] = explode(';', $food->step);
 
         // Hitung jumlah record di tabel food_records yang terkait dengan food ini
         $foodRecordCount = $food->food_records()->count();

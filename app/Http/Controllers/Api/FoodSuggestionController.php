@@ -93,9 +93,9 @@ class FoodSuggestionController extends Controller
         $food_suggestion = $food_suggestion->makeHidden(['source', 'created_at', 'updated_at']);
 
         // Konversi string ke array
-        $food_suggestion['recipe'] = explode(',', $food_suggestion->recipe);
-        $food_suggestion['fruit'] = explode(',', $food_suggestion->fruit);
-        $food_suggestion['step'] = explode(',', $food_suggestion->step);
+        $food_suggestion['recipe'] = explode(';', $food_suggestion->recipe);
+        $food_suggestion['fruit'] = explode(';', $food_suggestion->fruit);
+        $food_suggestion['step'] = explode(';', $food_suggestion->step);
 
         // filter data yang ingin disembunyikan
         $food_suggestion = $food_suggestion->makeHidden([
