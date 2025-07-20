@@ -41,7 +41,9 @@ class UserGrowthStat extends BaseWidget
                 ->color('success'),
 
             Stat::make('Kenaikan Pengguna', $growth)
-                ->description(sprintf('%s%% dari bulan sebelumnya', number_format($growthPercentage)))
+                ->description($previousMonthUsers == 0 && $currentMonthUsers > 0
+                    ? '100% (pertumbuhan dari 0 pengguna)'
+                    : sprintf('%s%% dari bulan sebelumnya', number_format($growthPercentage)))
                 ->descriptionIcon($growth >= 0 ? 'heroicon-s-arrow-trending-up' : 'heroicon-s-arrow-trending-down')
                 ->color($growth >= 0 ? 'success' : 'danger'),
 
